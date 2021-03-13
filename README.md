@@ -5,6 +5,8 @@ scrap.py -  can do webscrapping for a full website with the help of Beautifulsou
 
 main.py -  webscrapping from klinikbewertungen.de using BS4 to CSV excel format.
 
+Web Driver file (Google Chrome) added.
+
 google_scrap_v1 - First version - Web scraping Google Maps -Selenium
       Following solutions are added:
     1. Automation of opening Google Chrome browser, 
