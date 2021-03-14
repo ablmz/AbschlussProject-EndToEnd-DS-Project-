@@ -22,7 +22,9 @@ google_scrap_v2:
       2. Clicking and Expanding more reviews.
       3. 
 google_scrap_v3:
-      1. Scroll down all Google maps review - Function added.
+      1. Scroll down all Google maps review - Function added and minor changes in whole code.
 
 google_scrap_v4:
+      1. Expanding All reviews in Google maps ( with use of Selenium) and minor changes in whole code.
+
 
