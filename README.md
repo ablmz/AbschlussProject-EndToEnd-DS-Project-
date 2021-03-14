@@ -26,5 +26,9 @@ google_scrap_v3:
 
 google_scrap_v4:
       1. Expanding All reviews in Google maps ( with use of Selenium) and minor changes in whole code.
+      
+google_scrap_v5:
+      1. Text Reviews scraping Function added.
+      2. Some other minor changes added.
 
-
+google_scrap_v6:
