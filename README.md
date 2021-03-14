@@ -20,7 +20,7 @@ google_scrap_v2:
        Following solutions are added:
       1. Printing the Clinic name.
       2. Clicking and Expanding more reviews.
-      3. 
+       
 google_scrap_v3:
       1. Scroll down all Google maps review - Function added and minor changes in whole code.
 
@@ -32,3 +32,9 @@ google_scrap_v5:
       2. Some other minor changes added.
 
 google_scrap_v6:
+      1. STAR REVIEWS scraping Function added.
+      2. DATE OF REVIEWS scraping Function added
+      3. Some other minor changes added.
+
+google_scrap_v7:
+      1. 
