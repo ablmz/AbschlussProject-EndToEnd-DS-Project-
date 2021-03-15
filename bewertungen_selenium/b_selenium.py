@@ -18,7 +18,7 @@ url = 'https://www.google.com/maps/place/Herzogin+Elisabeth+Hospital/@52.2329937
 # soup = BeautifulSoup(r.text,"html.parser") 
 
 # Google Web driver path
-chrome_driver_path = r"c:\DRIVERS\chromedriver"
+chrome_driver_path = "chromedriver"
 chrome_options = Options()
 
 #  To hide the Chrome browser
