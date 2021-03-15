@@ -37,4 +37,10 @@ google_scrap_v6:
       3. Some other minor changes added.
 
 google_scrap_v7:
-      1. 
+      1. NUMBER OF LIKES scraping Function added.
+      2. NUMBER OF TIMES SCROLLING NEEDED Function added.
+      3. COUNT FOR TOTAL NUMBER OF REVIEWS added.
+      4. Some other minor changes added.
+
+google_scrap_v8:
+
