@@ -141,7 +141,7 @@ def create_csv(csv_name,reviews_list,fields):
 #Clinicks name change into slug value (abc-def-ghi)
 csv_name = slugify(klinik_name)+'.csv'
 
-#Columns titles
+# Columns titles
 fields = ['Name', 'Kommanter', 'Datum', 'Like', 'Star']
 
 create_csv(csv_name,infos,fields)
