@@ -87,60 +87,63 @@ def expand_reviews():
 # RECALLNG - EXPANDING ALL REVIEWS FUNTION
 sleep(2)
 expand_reviews()
+#------------------------------------------#
+# TEXT REVIEWS SCRAPING - FUNCTION
 
-
-users = []
-
-titles = driver.find_elements_by_xpath('//div[@class="section-review-title"]/span')
-kommentars = driver.find_elements_by_xpath('//div[@class="section-review-review-content"]/span[2]')
+commentators = driver.find_elements_by_xpath('//div[@class="section-review-title"]/span')
+reviews = driver.find_elements_by_xpath('//div[@class="section-review-review-content"]/span[2]')
 stars = driver.find_elements_by_xpath('//div[@class="section-review-metadata section-review-metadata-with-note"]/span[2]')
-
-datums = driver.find_elements_by_xpath('//span[@class="section-review-publish-date"]')
+dates = driver.find_elements_by_xpath('//span[@class="section-review-publish-date"]')
 likes = driver.find_elements_by_xpath('//span[@class="section-review-thumbs-up-count"]')
+
+infos = []
 y=1
 while(y<int(reviews_number[0])):
-	user = []	
-	first_user = titles.pop(0)
-	user_name = first_user.text
-	user.append(user_name)
+	info = []	
+	first_user = commentators.pop(0)
+	commentator = first_user.text
+	info.append(commentator)
 	
-	first_kommentar = kommentars.pop(0)
-	komment = first_kommentar.text.replace('\n','**')
-	user.append(komment)
+	first_review = reviews.pop(0)
+	review = first_review.text.replace('\n','**')
+	info.append(review)
 
-	first_datum = datums.pop(0)
-	datum = first_datum.text
-	user.append(datum)
+	first_date = dates.pop(0)
+	date = first_date.text
+	info.append(date)
 
 	if (len(likes))==0:
-		like='NaN'
+		like='No Like'
 	else:
 		first_like = likes.pop(0)
 		like = first_like.text
-	user.append(like)
+	info.append(like)
 
 	first_star = stars.pop(0)
 	star = first_star.get_attribute("aria-label").split()
-	user.append(star[0])
+	info.append(star[0])
 
-	users.append(user)
+	infos.append(info)
 
 	#user.clear()
 	y= y+1
 	
-#print('list:',users)
+#----------------------------------------#
+#Creating CSV file with function
 
-
-
-def make_csv(csv_name,reviews_list,fields):
+def create_csv(csv_name,reviews_list,fields):
 	with open(csv_name, 'w', encoding='utf-8') as f:
 		# using csv.writer method from CSV package 
 		write = csv.writer(f)
 		write.writerow(fields)
 		write.writerows(reviews_list)
 
+#Clinicks name change into slug value (abc-def-ghi)
 csv_name = slugify(klinik_name)+'.csv'
+
+#Columns titles
 fields = ['Name', 'Kommanter', 'Datum', 'Like', 'Star']
 
-make_csv(csv_name,users,fields)
+create_csv(csv_name,infos,fields)
+
 driver.close()
