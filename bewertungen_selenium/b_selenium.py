@@ -100,8 +100,8 @@ infos = []
 y=1
 while(y<int(reviews_number[0])):
 	info = []	
-	first_user = commentators.pop(0)
-	commentator = first_user.text
+	first_commentator = commentators.pop(0)
+	commentator = first_commentator.text
 	info.append(commentator)
 	
 	first_review = reviews.pop(0)
