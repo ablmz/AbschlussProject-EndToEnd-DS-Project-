@@ -43,4 +43,6 @@ google_scrap_v7:
       4. Some other minor changes added.
 
 google_scrap_v8:
-
+      1. Function SAVING scraped data (Dataframe) as a CSV file added.
+      2. Changes in LIKE FUNCTION added - as Google maps reviews doesn't had LIKE option in older Reviews.
+      3. Some other minor changes added.
