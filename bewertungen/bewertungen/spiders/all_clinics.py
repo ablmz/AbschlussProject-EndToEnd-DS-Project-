@@ -1,18 +1,24 @@
 import scrapy
 from  scrapy import Request
 from scrapy.crawler import CrawlerProcess
-# from scrapy_splash import SplashRequest
-
+import csv
 
 
 class TestSpider(scrapy.Spider):
+   
+
     name = 'test'
-    # allowed_domains = ['klinikbewertungen.de']
-    # start_urls = ['https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-hameln']
-
-    #handle_httpstatus_list = [404,429,503]
-
     
+     # output csv
+    custom_settings ={
+        'FEED_FORMAT':'csv',
+        'FEED_URI':'output.csv'
+    }
+
+    #output for json
+    # custom_settings ={
+    #   'FEED_FORMAT':'json',
+    #   'FEED_URI':'output.json'
 
     def start_requests(self):
         urls = [
@@ -55,6 +61,8 @@ class TestSpider(scrapy.Spider):
 
         # Mehr values
         all_reviews = response.xpath("//div[@class='list ratinglist']/article")
+
+        
 
         for review in all_reviews:            
             review_title = review.xpath(".//header[@style='float:left;']/h2/text()").get()
@@ -142,12 +150,9 @@ class TestSpider(scrapy.Spider):
                     daumen = 'Daumen hoch'
                 else:
                     daumen = 'Daumen runter'
-            
+                       
 
-            
-
-            #print((((xx[2].strip()).split('|')[0])).strip())
-
+         
             yield{
                 'Name der Klinik':klinik_name,
                 'bewertungen':bewertungen.strip(),
@@ -175,6 +180,8 @@ class TestSpider(scrapy.Spider):
                 'Daumen':daumen
                 
             }
+
+            
 if __name__ == '__main__':
     process = CrawlerProcess()
     process.crawl(TestSpider)
