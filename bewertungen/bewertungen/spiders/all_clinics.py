@@ -3,26 +3,26 @@ from  scrapy import Request
 from scrapy.crawler import CrawlerProcess
 import csv
 
-
 class TestSpider(scrapy.Spider):
-   
-
     name = 'test'
     
      # output csv
-    custom_settings ={
-        'FEED_FORMAT':'csv',
-        'FEED_URI':'output.csv'
-    }
+    # custom_settings ={
+    #     'FEED_EXPORT_ENCODING':'UTF-8',
+    #     'FEED_FORMAT':'csv',
+    #     'FEED_URI':'output.csv'
+    # }
 
     #output for json
-    # custom_settings ={
-    #   'FEED_FORMAT':'json',
-    #   'FEED_URI':'output.json'
+    custom_settings ={
+      'FEED_EXPORT_ENCODING':'UTF-8',
+      'FEED_FORMAT':'json',
+      'FEED_URI':'output.json'}
 
     def start_requests(self):
         urls = [
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-augenklinik-dr-hoffmann-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-marienstift-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-kliniken-herzogin-elisabeth-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-goettingen',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-augenklinik-dr-hoffmann-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-marienstift-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-kliniken-herzogin-elisabeth-braunschweig',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-goettingen',
             'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-tiefenbrunn-rosdorf',
             'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-friederikenstift-hannover',
             'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-annastift-hannover',
@@ -45,15 +45,15 @@ class TestSpider(scrapy.Spider):
             'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-soltau']
 
         for url in urls:
-            yield Request(url, callback=self.parse)
+            yield Request(url+'/bewertungen?allbew#more', callback=self.parse)
 
 
     def parse(self, response):
-        next_page = response.xpath("//a[@class='raquo button']/@href").get()
-        if next_page:
-            full_link = response.urljoin(next_page)
-            # full_link = f"https://www.klinikbewertungen.de{next_page}"
-            yield scrapy.Request(url=full_link, callback=self.parse) 
+        # next_page = response.xpath("//a[@class='raquo button']/@href").get()
+        # if next_page:
+        #     full_link = response.urljoin(next_page)
+        #     # full_link = f"https://www.klinikbewertungen.de{next_page}"
+        #     yield scrapy.Request(url=full_link, callback=self.parse) 
 
         #Fixed Values -one output
         bewertungen = response.xpath("//*[@class='block']/header/h1/text()").get()
@@ -64,8 +64,14 @@ class TestSpider(scrapy.Spider):
 
         
 
-        for review in all_reviews:            
+        for review in all_reviews:
+
             review_title = review.xpath(".//header[@style='float:left;']/h2/text()").get()
+
+            message = ''
+            if review.xpath(".//header[@style='float:left;']/p/text()").get():
+                message =  review.xpath(".//header[@style='float:left;']/p/text()").get()           
+
             review_date = review.xpath(".//time/text()").get()
 
             fachbereich = review.xpath(".//span[@class='right']/a/text()").get()
@@ -155,6 +161,7 @@ class TestSpider(scrapy.Spider):
          
             yield{
                 'Name der Klinik':klinik_name,
+                'Message':message,
                 'bewertungen':bewertungen.strip(),
                 'Title':review_title,
                 'Datum der Bewertung':review_date,
