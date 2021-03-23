@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Sentimentanalyse\n",
+    "# Sentiment Analyse with Jupyter Notebook The Clinics Review Datas in Lower Saxsony Germany\n",
     "\n",
     "Sentimentanalyse, auch _Opinion Mining_ genannt, ist das herausfinden der Meinung, die in einem Text zu igendetwas geäußert wird.\n",
     "\n",
@@ -12,7 +12,7 @@
     " * Objektiv vs. Subjektiv und \n",
     " * Negativ - Neutral - Positiv.\n",
     "\n",
-    "Längere Texte können natürlich mehrere Meinungen zu den gleichen und zu verschiedenen Sachen enthalten. Im folgenden machen wir mal die vereinfachende Annahme, das Texte immer homogen sind. \n",
+    "Längere Texte können natürlich mehrere Meinungen zu den gleichen und zu verschiedenen Sachen enthalten.\n",
     "\n",
     "Unsere einfache Hypothese ist, dass es Wörter gibt, die eine stark positives oder negatives Sentiment verkörpern, und das es reicht diese Wörter zu finden, um einen Text zu klassifizieren. Diese Annahme ist natürlich nicht ganz korrekt. Eine positive ode negative Meinung hängt natürlich von mehr als nur von einzelnen Wörtern ab: insbesondere  Negation kann die Bedeutung eines Wortes grundlegend ändern. Einige ganz neue Verfahren (Stichwörter: ELMO und BERT) können auch mit der unterschiedliche Bedeutung von Wörtern in Abhängigkeit der umgebenden Wörter umgehen. Wir kommen aber schon ganz weit, wenn wir nur einzelne Wörter verwenden. Verfahren, die nur einzelne Wörter verwenden, ohne ihre Beziehungen zu berücksichtigen, nennt man übrigens _Bag of Word_-Verfahren."
    ]
@@ -22,7 +22,7 @@
    "metadata": {},
    "source": [
     "Es gibt nun zwei Möglichkeiten die Idee umzusetzen:\n",
-    "1. Wir trainieren einen Classifier, der aus Beispieltexten lernt, wie viel jedes Wort zum positiven oder negativen Sentiment beiträgt. Der Vorteil dieser Methode ist, dass wie genaue gewichte für eine spezifische Domäne oder Textart lernen können. Der Nachteil ist, dass wir Texte brauchen, die händisch beuurteilt wurden.\n",
+    "1. Wir trainieren einen Classifier, der aus Beispieltexten lernt, wie viel jedes Wort zum positiven oder negativen Sentiment beiträgt. Der Vorteil dieser Methode ist, dass wie genaue gewichte für eine spezifische Domäne oder Textart lernen können. Wir nutzen die Bewertungdaten der Webseite klinikbewertung.de\n",
     "2. Wir nutzen allgemeine Listen mit positiven und negativen Wörtern."
    ]
   },
@@ -40,7 +40,7 @@
     "* TextBlob: eine Auswahl von Algorithmen aus NLTK, die zusammen eine Standard-Analyse eines Textes für einige wenige Sprachen ausführen können. Wenig Vorwissn erforderlich, einfach einzusetzen, aber ohne Möglichkeiten, etwas anzupassen.\n",
     "* Spacy: von der Idee und Funktionalität sehr ähnlich zu TextBlob, etwas umfangreicher und vorallem mit eigener sehr performante Implementierung.\n",
     "\n",
-    "Weder NLTK noch Spacy enthalten eine fertig eingebaute Sentimentanalyse für Deutsche Texte. TextBlob bietet diese Funktionalität aber. "
+    "Weder NLTK noch Spacy enthalten eine fertig eingebaute Sentimentanalyse für Deutsche Texte. TextBlob bietet diese Funktionalität aber.  Deswegen in diesem Notebook werden wir Textblob nutezn um die Polarität zu zeigen."
    ]
   },
   {
@@ -54,7 +54,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 140,
    "metadata": {},
    "outputs": [
     {
@@ -64,10 +64,10 @@
       "Requirement already up-to-date: textblob-de==0.4.3 in c:\\users\\name\\anaconda3\\lib\\site-packages (0.4.3)\n",
       "Requirement already satisfied, skipping upgrade: textblob>=0.9.0 in c:\\users\\name\\anaconda3\\lib\\site-packages (from textblob-de==0.4.3) (0.15.3)\n",
       "Requirement already satisfied, skipping upgrade: nltk>=3.1 in c:\\users\\name\\anaconda3\\lib\\site-packages (from textblob>=0.9.0->textblob-de==0.4.3) (3.5)\n",
+      "Requirement already satisfied, skipping upgrade: regex in c:\\users\\name\\anaconda3\\lib\\site-packages (from nltk>=3.1->textblob>=0.9.0->textblob-de==0.4.3) (2020.6.8)\n",
       "Requirement already satisfied, skipping upgrade: joblib in c:\\users\\name\\anaconda3\\lib\\site-packages (from nltk>=3.1->textblob>=0.9.0->textblob-de==0.4.3) (0.16.0)\n",
       "Requirement already satisfied, skipping upgrade: tqdm in c:\\users\\name\\anaconda3\\lib\\site-packages (from nltk>=3.1->textblob>=0.9.0->textblob-de==0.4.3) (4.47.0)\n",
-      "Requirement already satisfied, skipping upgrade: click in c:\\users\\name\\anaconda3\\lib\\site-packages (from nltk>=3.1->textblob>=0.9.0->textblob-de==0.4.3) (7.1.2)\n",
-      "Requirement already satisfied, skipping upgrade: regex in c:\\users\\name\\anaconda3\\lib\\site-packages (from nltk>=3.1->textblob>=0.9.0->textblob-de==0.4.3) (2020.6.8)\n"
+      "Requirement already satisfied, skipping upgrade: click in c:\\users\\name\\anaconda3\\lib\\site-packages (from nltk>=3.1->textblob>=0.9.0->textblob-de==0.4.3) (7.1.2)\n"
      ]
     }
    ],
@@ -77,7 +77,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 141,
    "metadata": {},
    "outputs": [
     {
@@ -119,25 +119,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 89,
+   "execution_count": 142,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Collecting wordcloud\n",
-      "  Downloading wordcloud-1.8.1-cp38-cp38-win_amd64.whl (155 kB)\n",
+      "Requirement already satisfied: wordcloud in c:\\users\\name\\anaconda3\\lib\\site-packages (1.8.1)\n",
       "Requirement already satisfied: numpy>=1.6.1 in c:\\users\\name\\anaconda3\\lib\\site-packages (from wordcloud) (1.19.5)\n",
-      "Requirement already satisfied: pillow in c:\\users\\name\\anaconda3\\lib\\site-packages (from wordcloud) (7.2.0)\n",
       "Requirement already satisfied: matplotlib in c:\\users\\name\\anaconda3\\lib\\site-packages (from wordcloud) (3.2.2)\n",
-      "Requirement already satisfied: kiwisolver>=1.0.1 in c:\\users\\name\\anaconda3\\lib\\site-packages (from matplotlib->wordcloud) (1.2.0)\n",
-      "Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in c:\\users\\name\\anaconda3\\lib\\site-packages (from matplotlib->wordcloud) (2.4.7)\n",
+      "Requirement already satisfied: pillow in c:\\users\\name\\anaconda3\\lib\\site-packages (from wordcloud) (7.2.0)\n",
       "Requirement already satisfied: cycler>=0.10 in c:\\users\\name\\anaconda3\\lib\\site-packages (from matplotlib->wordcloud) (0.10.0)\n",
       "Requirement already satisfied: python-dateutil>=2.1 in c:\\users\\name\\anaconda3\\lib\\site-packages (from matplotlib->wordcloud) (2.8.1)\n",
-      "Requirement already satisfied: six in c:\\users\\name\\anaconda3\\lib\\site-packages (from cycler>=0.10->matplotlib->wordcloud) (1.15.0)\n",
-      "Installing collected packages: wordcloud\n",
-      "Successfully installed wordcloud-1.8.1\n"
+      "Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in c:\\users\\name\\anaconda3\\lib\\site-packages (from matplotlib->wordcloud) (2.4.7)\n",
+      "Requirement already satisfied: kiwisolver>=1.0.1 in c:\\users\\name\\anaconda3\\lib\\site-packages (from matplotlib->wordcloud) (1.2.0)\n",
+      "Requirement already satisfied: six in c:\\users\\name\\anaconda3\\lib\\site-packages (from cycler>=0.10->matplotlib->wordcloud) (1.15.0)\n"
      ]
     }
    ],
@@ -151,8 +148,15 @@
    "source": []
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Danach importieren wir die Bibliotekhen, die benötigt werden."
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 105,
+   "execution_count": 143,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -165,12 +169,26 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "##### Konvertieren csv-Daten in Pandas DataFrame"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 27,
+   "execution_count": 144,
    "metadata": {},
    "outputs": [],
    "source": [
     "data = pd.read_csv(r'C:\\Users\\name\\Desktop\\WB\\Abschlussproject\\ML\\clinical_data_lowersaxony.csv', encoding='utf-8')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Wir erstellen Dataframe"
    ]
   },
   {
@@ -939,12 +957,7 @@
   {
    "cell_type": "code",
    "execution_count": 29,
-   "metadata": {
-    "collapsed": true,
-    "jupyter": {
-     "outputs_hidden": true
-    }
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1024,6 +1037,13 @@
    ],
    "source": [
     "df.info"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Obwohl wir die Daten als UTF-8 kodiert haben, sollen wir einige Falsche Wörter ändern."
    ]
   },
   {
@@ -1135,8 +1155,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Mirhilfe dieser Code bekommen wir alle textuelle Bewertungen für ein Krankenhaus"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 72,
+   "execution_count": 149,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1149,12 +1176,11 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 74,
+   "execution_count": 150,
    "metadata": {},
    "outputs": [],
    "source": [
-    "review=sentiment(1)\n",
-    "#Erfahrunsberichten"
+    "review=sentiment(1)"
    ]
   },
   {
@@ -1166,7 +1192,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 76,
+   "execution_count": 151,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1175,13 +1201,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 77,
-   "metadata": {
-    "collapsed": true,
-    "jupyter": {
-     "outputs_hidden": true
-    }
-   },
+   "execution_count": 152,
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1329,7 +1350,7 @@
        " Sentence(\"Es gibt also noch Potential für die Klinik, sich zu verbessern - und ich habe den Eindruck, dass dies erkannt ist und dort daran auch gearbeitet wird.\")]"
       ]
      },
-     "execution_count": 77,
+     "execution_count": 152,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1340,13 +1361,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 78,
-   "metadata": {
-    "collapsed": true,
-    "jupyter": {
-     "outputs_hidden": true
-    }
-   },
+   "execution_count": 153,
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1354,7 +1370,7 @@
        "WordList(['Meine', 'Laser', 'OP', 'grauer', 'Star', 'hat', 'super', 'geklappt', '.', 'Alles', 'lief', 'wie', 'am', 'Schnürchen', 'ab', '.', 'Danke', 'dafür.Danke', 'auch', 'an', 'den', 'neuen', 'Küchenchef', 'für', 'das', 'tolle', 'Brötchen', '.', '(', 'war', 'eine', 'Überraschung', ')', 'Mit', 'dem', 'Shuttleservice', 'war', 'ich', 'auch', 'sehr', 'zufrieden', ',', 'sehr', 'freundliche', 'Fahrerrinnen.Also', 'die', 'Klinik', 'ist', 'absolut', 'weiter', 'zu', 'empfehlen.Bin', 'sehr', 'zufrieden', 'gewesen', 'mit', 'der', 'Klinik', 'und', 'dem', 'Personal', '.', 'Die', 'erste', 'OP', 'verlief', 'sehr', 'gut', '+die', 'zweite', 'folgt', 'in', '3', 'Wochen', '.', 'Werde', 'die', 'Klinik', 'auf', 'jeden', 'Fall', 'weiterempfehlenKomptentes', 'Ärzteteam.Strickte', 'Einhaltung', 'der', 'Corona', 'Schutzregeln.Rundum', 'zufriedenIch', 'komme', 'seit', 'einen', 'halben', 'Jahr', 'mit', 'meiner', 'behinderten', 'Frau', 'hier', 'zum', 'Augen-Spritzen', 'auf', 'Grund', 'eines', 'diabetischen', 'Makulasyndroms', '.', 'Ich', 'kann', 'bis', 'jetzt', 'nur', 'positiv', 'berichten', '-', 'auch', 'wenn', 'das', 'Wartezimmer', 'sehr', 'voll', 'ist', '-', 'waren', 'wir', 'immer', 'sehr', 'schnell', 'dran', 'und', 'innerhalb', 'einer', 'Stunde', 'fertig', '.', 'Hier', 'wird', 'der', 'Patient', 'noch', 'als', 'Mensch', 'betrachtet', 'und', 'nicht', 'als', 'Nummer', ',', 'es', 'wird', 'mit', 'Namen', 'aufgerufen', '-', 'Kinder', 'mit', 'Vornamen', '.', 'Bei', 'Behinderungen', 'werden', 'die', 'Patienten', 'von', 'den', 'immer', 'netten', 'Schwestern', 'betreut', 'und', 'es', 'wird', 'geholfen', '.', 'Von', 'den', 'Ärzten', 'bekommt', 'man', 'alles', 'genau', 'erklärt', '-', 'hier', 'fühlt', 'man', 'sich', 'in', 'guten', 'Händen', '-', 'Danke', 'an', 'das', 'gesamte', 'Ärzte', 'und', 'Schwesternteam.Ich', 'war', 'Anfang', 'November', '2019', 'zur', 'Augen-OP', '(', 'Grauer', 'Star', ')', 'in', 'der', 'Klinik', 'und', 'zunächst', 'wegen', 'negativer', 'Meinungen', 'voller', 'Bedenken', '.', 'Doch', 'im', 'Gegenteil', '!', 'Sowohl', 'beim', 'Voruntersuchungstermin', 'als', 'auch', 'am', 'Tag', 'der', 'OP', 'kümmerte', 'sich', 'das', 'gesamte', 'Klinikpersonal', 'nett', 'und', 'ausführlich', 'beratend', 'um', 'mich.Besonders', 'fürsorglich', 'und', 'freundlich', 'begegnete', 'mir', 'die', 'Anästhesieärztin', ',', 'die', 'mir', 'durch', 'ihre', 'beruhigende', 'und', 'verständliche', 'Aufklärung', 'der', 'auf', 'mich', 'zukommenden', 'Ereignisse', 'die', 'Angst', 'vor', 'dem', 'Eingriff', 'nahm.Trotz', 'extrem', 'hoher', 'Patientenfrequenz', 'erfolgte', 'die', 'Behandlung/Untersuchung', 'in', 'angemessener', 'Zeit', '.', 'Ausführliche', 'Untersuchung', 'durch', 'mehrere', 'Ärzte', 'mit', 'entsprechend', 'verständlicher', 'und', 'detaillierter', 'Aufklärung', 'über', 'Behandlung-', 'und', 'OP-Verlauf', '.', 'Klinikaufenthalt', 'durch', 'akute', 'Behandlung', 'leider', 'nur', 'in', 'Drei.Bettzimmer', 'möglich', 'gewesen', '.', 'Dennoch', 'versuchen', 'sowohl', 'Ärzte', 'aus', 'auch', 'das', 'umsichtige', 'und', 'sehr', 'nette', 'Pflegepersonal', 'den', 'Aufenthalt', 'den', 'Umständen', 'entsprechend', 'angenehm', 'zu', 'machen.Die', 'postoperative', 'Versorgung', 'durch', 'die', 'Ärzte', 'ist', 'vorbildlich.Diese', 'Klinik', 'ist', 'NUR', 'zu', 'empfehlen', '!', '!', '!', 'Das', 'gesamte', 'Team', ':', 'Ärzte', ',', 'Helferinnen', ',', 'Pflege-', 'und', 'Hauswirtschaftspersonal', 'arbeiten', 'ausnahmslos', 'professionell', '!', '!', '!', 'Nach', 'insgesamt', '14', 'Tagen', 'Aufenthalt', 'kann', 'ich', 'sagen', ',', 'NICHT', 'ein', 'unfreundliches', 'Wort', ',', 'absolut', 'engmaschige', 'ärztliche', 'und', 'pflegerische', 'Betreuung', '!', '!', '!', 'Jederzeit', 'würde', 'ich', 'mich', 'wieder', 'an', 'die', 'Augenklinik', 'wenden', '!', '!', '!', 'Sehr', 'nettes', 'und', 'kompetentens', 'Personal', '!', '!', 'Kurze', 'Wartezeiten', 'trotz', 'hoher', 'Frequentierung', '.', 'Gute', 'Aufklärung', 'durch', 'die', 'Ärzte', '!', '!', '!', '!', 'Im', 'OP-', 'Bereich', 'nette', ',', 'heitere', 'und', 'gelassene', 'Atmosphäre', 'trotz', 'Stress', '.', 'Meine', 'Mutter', 'fühlt', 'sich', 'dort', 'als', 'Mensch', 'und', 'nicht', 'nur', 'als', 'Patient', 'und', 'Nummer', '!', '!', 'Alle', 'Mitarbeiter', 'sehr', 'geschult', 'und', 'emphatisch', '!', 'Freundliches', 'Personal', ',', 'keine', 'lange', 'Wartezeit', ',', 'kompetente', 'BehandlungDass', 'es', 'bei', 'einer', 'offenen', 'Sprechstunde', 'einer', 'Augenklinik', 'zu', 'langen', 'Wartezeiten', 'kommt', ',', 'ist', 'verständlich', ',', 'trotzdem', 'ist', 'es', 'toll', ',', 'dass', 'es', 'so', 'eine', 'Möglichkeit', 'gibt', '.', 'Allerdings', 'war', 'ich', 'nach', 'zwei', 'Stunden', 'Warten', 'auf', 'einer', 'Bank', 'oberhalb', 'einer', 'zugigen', 'Treppe', 'schon', 'sehr', 'durchgefroren.Die', 'Arzthelferinnen', 'wirkten', 'freundlich', ',', 'die', 'beiden', 'dann', 'untersuchenden', 'Ärztinnen', 'leider', 'gar', 'nicht', '.', 'Kaum', 'Aufklärung', ',', 'meine', 'drei', 'Sätze', 'die', 'ich', 'zur', 'Anamnese', 'sagen', 'wollte', ',', 'schienen', 'uninteressant', ',', 'es', 'wurde', 'kein', 'einziges', 'Mal', 'gelächelt', '.', 'Fragen', 'von', 'mir', 'am', 'Ende', 'wurden', 'teilweise', 'sehr', 'gereizt', 'aufgenommen', '.', 'Geantwortet', 'wurde', 'z.T', '.', 'mit', 'genervten', 'rhetorischen', 'Gegenfragen', '.', 'Es', 'war', 'keine', 'angenehme', 'Atmosphäre', 'und', 'ich', 'traute', 'mich', 'am', 'Ende', 'gar', 'nicht', 'mehr', ',', 'alle', 'meine', 'Fragen', 'loszuwerden', '.', 'Ja', ',', 'Ärzte', 'haben', 'oft', 'wenig', 'Zeit', 'und', 'einen', 'stressigen', 'Job', '.', 'Trotzdem', 'gibt', 'es', 'Ärzte', ',', 'die', 'den', 'Patienten', 'mit', 'Respekt', 'und', 'Empathie', 'begegnen', 'und', 'sogar', 'fragen', ',', 'ob', 'es', 'noch', 'Fragen', 'gibt', '.', 'Letztlich', 'sind', 'Ärzte', 'nach', 'Patientenrechtegesetz', 'auch', 'einfach', 'verpflichtet', 'über', 'Diagnose', ',', 'Prognose', ',', 'Behandlungsmöglichkeiten', 'usw.', 'aufzuklären', ',', 'und', 'den', 'Patienten', 'zu', 'ermöglichen', ',', 'Fragen', 'zu', 'stellen', ',', 'bis', 'sie', 'alles', 'verstanden', 'haben', '.', 'Schade', ',', 'dass', 'das', 'so', 'oft', 'auf', 'der', 'Strecke', 'bleibt.Dazu', 'muss', 'ich', 'sagen', ',', 'dass', 'ich', 'schon', 'einmal', 'bei', 'einem', 'polnischem', 'Arzt', 'in', 'derselben', 'Klinik', 'war', '.', 'Dieser', 'war', 'tatsächlich', 'sehr', 'nett', 'und', 'wirkte', 'überhaupt', 'nicht', 'genervt', 'von', 'Fragen.Die', 'Schwestern', 'in', 'der', 'Anmeldung', 'habe', 'ich', 'zum', 'wiederholten', 'Male', 'als', 'sehr', 'unfreundlich', '(', 'genervt', ')', 'und', 'anmaßend', 'erlebt', '.', 'Zum', 'Teil', 'wurden', 'sogar', 'Anweisungen', 'der', 'Ärzte', 'nicht', 'ausgeführt', '.', 'Bei', 'allem', 'Respekt', ',', 'dass', 'täglich', 'so', 'viele', 'Patienten', 'behandelt', 'werden', ',', 'sollte', 'man', 'doch', 'diesen', 'Mitarbeitern', 'einmal', 'klar', 'machen', ',', 'dass', 'sie', 'es', 'mit', 'kranken', 'Menschen', 'zu', 'tun', 'haben', 'und', 'dass', 'man', 'ihnen', 'Respekt', 'zollt', '.', 'Schließlich', 'kommen', 'diese', 'Menschen', 'nicht', 'aus', 'Jux', 'und', 'Tollerei', 'in', 'die', 'Klinik', '.', 'Der', 'Ton', 'den', 'Assistenzärzten', 'gegenüber', 'lässt', 'auch', 'zu', 'Wünschen', 'übrig', ',', 'so', 'dass', 'es', 'den', 'Patienten', 'sogar', 'peinlich', 'ist', '.', 'Alles', 'in', 'allem', 'sehr', 'schade', '.', 'Denn', 'die', 'Ärtzte', 'leisten', 'tadellose', 'Arbeit', 'und', 'diesen', 'guten', 'Ruf', 'sollten', 'sie', 'sich', 'nicht', 'durch', 'unmotivierte', 'Mitarbeiter', 'zunichtemachen', 'lassen.Ich', 'habe', 'die', 'Klinik', 'aufgesucht', ',', 'um', 'schnell', 'eine', 'Diagnose', 'zu', 'bekommen', '.', 'Andere', 'Augenärzte', 'wollten', 'einen', 'Termin', 'in', '6', '-', '8', 'Monaten', 'geben', '.', 'Ich', 'bin', 'um', '07.15', 'Uhr', 'in', 'der', 'Klinik', 'gewesen', 'und', 'so', 'gegen', '09.30', 'Uhr', 'mit', 'OP-Termin', '(', 'grauer', 'Star', ')', 'wieder', 'raus', '.', 'Hätte', 'es', 'bis', 'zum', 'Abend', 'gedauert', ',', 'wäre', 'es', 'für', 'mich', 'auch', 'ok', 'gewesen', '.', 'Schneller', 'als', 'ein', 'Termin', 'in', '6', '-', '8', 'Monaten.Am', 'OP-Tag', 'wurde', 'ich', 'abgeholt', ',', 'war', 'um', '07.30', 'Uhr', 'in', 'der', 'Klinik', 'und', 'so', 'gegen', '10.00', 'Uhr', 'operiert', '.', 'Ich', 'empfand', 'den', 'gesamten', 'Vorgang', 'wie', 'eine', 'Fliesbandarbeit', '.', 'Was', 'aber', 'nicht', 'so', 'schlimm', 'war', ',', 'es', 'gab', 'ja', 'noch', 'weitere', 'Patienten', 'und', 'letztendlich', 'hat', 'es', 'die', 'Op', 'nicht', 'beeinflusst', 'und', 'darauf', 'kam', 'es', 'mir', 'an', '.', 'Die', 'Unterbringung', 'ist', 'nicht', 'gerade', 'modern', ',', 'aber', 'reicht', 'meines', 'Erachtens', 'aus', '.', 'Verpflegung', 'war', 'gut', 'und', 'reichlich', '.', 'Betreuung', 'war', 'auch', 'gut', 'und', 'in', 'allen', 'Bereichen', 'nett', 'und', 'höflich.Ich', 'kann', 'wieder', 'gut', 'sehen', 'und', 'danke', 'allen', 'Beteiligten', 'für', 'die', 'gute', 'Arbeit.Ich', 'will', 'nichts', 'empfehlen', ',', 'persönlich', 'ist', 'die', 'Klinik', 'mein', 'Ansprechpartner', '.', 'Sollte', 'ich', 'erneut', 'eine', 'OP', 'benötigen', '-', 'was', 'ich', 'nicht', 'hoffe', '-', 'dann', 'bin', 'ich', 'wieder', 'in', 'dieser', 'Klinik', 'und', 'vertraue', 'auf', 'erneute', 'gute', 'Behandlung', '!', 'In', 'der', 'Anmeldung', 'ist', 'Chaos', '...', 'Nachdem', 'ich', '1', 'Std', '.', 'im', 'Wartezimmer', 'saß', ',', 'meldete', 'ich', 'mich', 'erneut', 'bei', 'der', 'Anmeldung', 'und', 'fragte', ',', 'wie', 'lange', 'es', 'dauere', '.', 'Ich', 'war', 'zur', '2', '.', 'OP', 'des', 'Auges', 'bestellt', 'und', 'sagte', 'es', 'nun', 'auch..Die', 'Dame', 'daraufhin', ':', 'Sie', 'müssen', 'sagen', ',', 'was', 'sie', 'wollen', '...', 'Es', 'stand', 'auf', 'der', 'Überweisung', '.', 'Im', 'OP-Bereich', 'waren', 'alle', 'zuvorkommend', 'und', 'nett', ',', 'in', 'der', 'Anmeldung', 'total', 'überfordert..Hallo', ',', 'telefonische', 'Beratung', 'war', 'inkompetent', '.', 'Ich', 'habe', 'einen', 'Termin', 'vereinbart', 'und', 'habe', 'gefragt', ',', 'was', 'ich', 'für', 'meine', 'Arbeitsuntersuchung', 'brauche', '.', 'Wenn', 'aber', 'ich', 'schon', 'in', 'der', 'Klinik', 'war', ',', 'habe', 'ich', 'erfahren', ',', 'dass', 'ich', 'noch', 'einige', 'Unterlagen', 'brauche', ',', 'die', 'ich', 'natürlich', 'dabei', 'nicht', 'hatte', '.', 'Darüber', 'hat', 'mir', 'telefonisch', 'nichts', 'gesagt', '.', 'Und', 'in', 'der', 'Klinik', 'wusste', 'die', 'Beratung', 'selbst', 'nicht', ',', 'welche', 'Leistungen', 'sie', 'anbieten.Ich', 'war', 'sehr', 'enttäuscht', 'und', 'habe', 'viel', 'Zeit', 'verloren.Hut', 'ab', '!', 'Am', '19.', 'Februar', '2017', 'kam', 'ich', 'als', 'Notfall', 'in', 'die', 'Klinik', '.', 'Bereits', 'am', 'Empfang', 'habe', 'ich', 'freundliche', 'und', 'kompetente', 'Mitarbeiterinnen', 'schätzen', 'gelernt', '.', 'Die', 'verschiedenen', 'Ärzte', ',', 'die', 'für', 'meine', 'baldige', 'Genesung', 'sorgten', ',', 'kann', 'ich', 'nur', 'über', 'den', 'Klee', 'loben', '.', 'Ich', 'habe', 'zwar', 'keine', 'weiteren', 'Erfahrungen', '(', 'Gott', 'sei', 'Dank', ')', ',', 'aber', 'das', 'ich', 'so', 'schnell', 'wieder', 'genesen', 'bin', 'schreibe', 'ich', 'den', 'behandelnden', 'Ärzten', 'und', 'den', 'überaus', 'freundlichen', 'Pflegepersonal', 'in', 'diese', 'positive', 'Kritik.Abschließend', 'bedanke', 'ich', 'mich', 'nochmals', 'herzlich', 'dafür', ',', 'dass', 'Sie', 'mein', 'linkes', 'Auge', 'retten', 'konnten', '!', 'Ich', 'sehe', 'inzwischen', 'besser', 'als', 'zuvor', '!', 'Beste', 'Grüße', 'Rolf-Wilhelm', 'EimeckeIch', 'bin', 'an', 'Diabetes', 'erkrankt', 'und', 'habe', 'leider', 'auch', 'schon', 'Folgeschäden', 'im', 'Auge', '.', 'Beide', 'Augen', 'sind', 'betroffen', '.', 'Auf', 'beiden', 'Augen', 'ist', 'Flüssigkeit', 'auf', 'der', 'Netzhaut', '.', 'Zusätzlich', 'ist', 'in', 'dem', 'Glaskörper', 'des', 'rechten', 'Auges', 'eine', 'Blutung', ',', 'welche', 'sich', 'bislang', 'nicht', 'von', 'alleine', 'zurückgebildet', 'hat', '.', 'Auch', 'nicht', 'nach', 'einer', 'sehr', 'schmerzhaften', 'Laserbehandlung', 'mit', 'etwa', '500', 'Schuss', '.', 'Hinzu', 'kommt', 'noch', ',', 'das', 'beide', 'Linsen', 'getrübt', 'sind', '(', 'Grauer', 'Star', ')', '.Mir', 'wurde', 'in', 'dieser', 'Klinik', 'immer', 'gesagt', ',', 'dass', 'man', 'die', 'Linse', 'nicht', 'durch', 'eine', 'künstliche', 'ersetzen', 'kann', ',', 'solange', 'noch', 'Flüssigkeit', 'auf', 'der', 'Netzhaut', 'ist', '.', 'Das', 'habe', 'ich', 'so', 'hingenommen', 'und', 'habe', 'entsprechende', 'Injektionen', 'und', 'Lasereingriffe', 'in', 'beiden', 'Augen', 'durchführen', 'lassen', '.', '(', '11', 'Spritzen', 'links', ',', '3', 'rechts', ')', 'Es', 'ist', 'immer', 'mit', 'einer', 'erhöhten', 'bis', 'unzumutbaren', 'Wartezeit', 'verbunden', '.', 'Die', 'Terminvergabe', 'ist', 'zwar', 'in', 'dem', 'Augenblick', 'okay', ',', 'wenn', 'man', 'sie', 'erhält', ',', 'doch', 'dann', 'bei', 'dem', 'Besuch', 'zum', 'Termin', 'wundert', 'man', 'sich', ',', 'wenn', 'man', 'drei', ',', 'wier', 'oder', 'mehr', 'Stunden', 'warten', 'muss', '.', 'Ich', 'für', 'mich', 'habe', 'seit', 'gestern', 'die', 'Nase', 'gestrichen', 'voll', '.', 'Im', 'Warteraum', 'saßen', 'über', '20', 'Personen', '.', 'Bereits', 'operierte', 'Personen', ',', 'die', 'Ruhe', 'brauchten', ',', 'aber', 'auch', 'auf', 'den', 'eingriff', 'wartende', 'Personen', '.', 'Überwiegend', 'sind', 'es', 'natürlich', 'ältere', 'Personen', ',', 'die', 'sich', 'dort', 'quälen', 'müssen', '.', 'Teilweise', 'mussten', 'sie', 'stehen', ',', 'da', 'nicht', 'mal', 'ausreichend', 'Platz', 'zum', 'sitzen', 'vorhanden', 'war', '.', 'Eine', 'ältere', 'Person', 'wartet', 'seit', '9', 'Uhr', 'auf', 'seinen', 'Eingriff', '.', 'Als', 'ich', 'mit', 'meinem', 'Termin', 'um', '11', 'Uhr', 'ankam', 'und', 'das', 'hörte', ',', 'war', 'ich', 'erschrocken', ',', 'dass', 'man', 'einen', 'älteren', 'Mann', '(', 'ca', '75', 'Jahre', ')', 'dort', 'solange', 'warten', 'lies', '.', 'Bevor', 'ich', 'dann', 'gegen', '12.30', 'Uhr', 'rankam', ',', 'kam', 'dieser', 'Mann', 'gerade', 'geschwächt', 'aus', 'dem', 'OP', '.', 'Das', 'ist', 'nur', 'ein', 'Einzelfall', '.', 'Ich', 'selber', 'habe', 'die', 'Klinik', 'gegen', '13.30', 'Uhr', 'verlassen', 'dürfen.Es', 'ist', 'auch', 'schon', 'vorgekommen', ',', 'dass', 'man', 'meine', 'Gesundheitskarte', 'der', 'Krankenkasse', 'gar', 'nicht', 'eingelesen', 'hatte', ',', 'eine', 'Arbeitsunfähigkeitsbescheinigung', 'falsch', 'oder', 'gar', 'nicht', 'ausgestellt', 'hatte', '.', 'Zu', 'all', 'den', 'Sachen', 'musste', 'ich', 'erneut', 'in', 'die', 'Klinik', 'fahren', '.', 'Eines', 'Tages', 'wollte', 'man', 'nur', 'ein', 'Auge', 'behandeln', ',', 'aber', 'man', 'wollte', 'mir', 'beide', 'Augen', 'tropfen', '.', 'Das', 'zeigte', 'mir', 'erneut', ',', 'wie', 'durcheinander', 'dort', 'die', 'Organisation', 'ist', '.', 'Nach', 'den', 'ganzen', 'Quälerein', 'hatte', 'man', 'mir', 'dann', 'einen', 'Termin', 'für', 'eine', 'größere', 'OP', 'im', 'rechten', 'Augen', 'gegeben', '.', 'Man', 'wollte', 'nun', 'endlich', 'mal', 'eine', 'Linse', 'ersetzen', 'und', 'gleichzeitig', 'den', 'Glaskörper', 'entfernen', '.', 'Da', 'habe', 'ich', 'mich', 'entschlossen', ',', 'mir', 'eine', 'zweite', 'Meinung', 'einzuholen', 'und', 'habe', 'die', 'Klinik', 'gewechselt', '.', 'Schade', ',', 'dass', 'ich', 'nur', '2000', 'Zeichen', 'darf', '...', 'Anbahnung', 'und', 'Voruntersuchung', 'für', 'eine', 'Katarakt-OP', 'bekam', 'ich', 'ohne', 'Termin', '.', 'Der', 'Preis', 'dafür', 'war', 'langes', 'Warten', 'zwischen', 'den', 'Untersuchungen', '.', 'Das', 'Ganze', 'zog', 'sich', 'über', 'ca', '.', '4', 'Stunden', '.', 'Auffallend', 'war', ',', 'dass', 'das', 'Personal', 'keine', 'Motivation', '(', '?', ')', 'hatte', ',', 'den', 'Patienten', 'jeweils', 'darüber', 'zu', 'informieren', ',', 'was', 'gerade', 'gemacht', 'wird', '.', 'Man', 'bekam', 'nur', 'Anweisungen', ':', 'Machen', 'Sie', 'dies', ',', 'gehen', 'Sie', 'da', '.', 'Niemand', 'stellte', 'sich', 'vor', '.', 'Am', 'Ende', 'stand', 'ein', 'halblegales', 'Aufnahmegespräch', 'mit', 'einem', 'Arzt', '(', '?', ')', '.', 'Es', 'wurde', 'Persönliches', 'abgefragt', ',', 'Vorerkrankungen', ',', 'Allergien', 'etc..', 'Ein', 'Medikamentenname', 'reichte', 'als', 'Info', 'nicht', ',', 'das', 'führte', 'zu', 'langem', 'Suchen', 'in', 'der', 'Datenbank', '(', 'hätte', 'ich', 'Dummerle', 'mir', 'nur', 'den', 'Wirkstoff', 'gemerkt', ')', '.Der', 'Arzt', 'hielt', 'mich', 'wohl', 'für', 'einen', 'armen', 'Schlucker', ',', 'denn', 'es', 'folgte', 'weder', 'eine', 'Aufklärung', 'über', 'alle', 'Möglichkeiten', '(', 'verschiedenste', 'Linsentypen', ',', 'Lichtfilter', ',', 'Multifokal', ',', 'unterschiedliche', 'Augeneinstellung', ')', 'noch', 'über', 'die', 'tatsächlichen', 'Risiken', 'und', 'ihre', 'Wahrscheinlichkeit', '.', 'Es', 'wurde', 'kurz', 'mein', 'Beruf', 'angesprochen', 'und', 'der', 'Arzt', 'entschied', 'dann', ',', 'was', 'wohl', 'das', 'Beste', 'für', 'mich', 'sei', '.', 'Ich', 'bekamm', 'ein', 'Faltblatt', 'zur', 'Unterschrift', 'vorgehalten', ',', 'auf', 'dem', 'ein', 'paar', 'aufgemalte', 'Kreise', 'wohl', 'die', 'größten', 'Risiken', 'markieren', 'sollten', '.', 'Mit', 'meinen', 'Augen', 'konnte', 'ich', 'das', 'fast', 'nicht', 'lesen', '!', 'Beim', 'OP-Termin', 'war', 'die', 'Abfertigung', 'schnell', ',', 'die', 'nötigen', 'Augentropfen', 'bekamen', 'alle', 'Patienten', 'schon', 'im', 'Warteraum', ',', 'auch', 'ein', 'Fragebogen', 'mit', 'unlesbar', 'kleiner', 'Schrift', 'war', 'zu', 'unterschreiben', '(', 'Absicht', '?', ')', '.', 'Meiner', 'Begleitung', 'fiel', 'noch', 'eine', 'besonders', 'freundliche', 'Behandlung', 'für', 'Privatpatienten', 'auf', '.', 'Die', 'OP', 'verlief', 'dann', 'ohne', 'viele', 'Worte', '.', 'DEN', 'OPERATEUR', 'KONNTE', 'ICH', 'WEDER', 'SEHEN', ',', '(', 'war', 'vor', 'Augenabdeckung', 'nicht', 'da', ')', 'NOCH', 'HAT', 'ER', 'SICH', 'VORGESTELLT', '.', 'Geht', 'gar', 'nicht', '!', 'Danach', ':', 'Tschüß', '!', 'Kommen', 'sie', 'morgen', 'wieder', '.', 'Auch', 'bei', 'der', 'Erstkontrolle', 'keine', 'Verhaltensregeln', ',', 'nichts', '!', 'Als', 'ich', 'bei', 'der', 'Zweitkontrolle', 'meine', 'Probleme', 'schilderte', ',', 'wurde', 'nicht', 'darauf', 'eingegangen', ',', 'vertröstet', 'und', 'wir', 'sehen', 'Sie', 'bei', 'der', 'zweiten', 'OP', '-', 'tschüß', '!', '.', 'Die', 'habe', 'ich', 'abgesagt', 'und', 'lasse', 'nun', 'ALLES', 'durch', 'einen', 'Augenarzt', 'überprüfen', '!', 'Mein', 'Freund', 'liegt', 'grad', 'stationär', 'in', 'der', 'Klinik', 'und', 'was', 'da', 'abläuft', 'geht', 'garnicht', '!', '!', '!', '!', '!', '!', '4', 'Tage', 'nach', 'der', 'OP', 'weiß', 'er', 'immer', 'noch', 'nicht', ',', 'ob', 'alles', 'gut', 'gegangen', 'ist', 'und', 'was', 'nun', 'genau', 'gemacht', 'worden', 'ist', '.', 'Die', 'Ärzte', 'haben', 'entweder', 'keine', 'Zeit', 'oder', 'jeder', 'sagt', 'was', 'anderes', '.', 'Der', 'Arzt', ',', 'der', 'ihn', 'operierte', 'ist', 'nicht', 'greifbar', 'und', 'hat', 'immer', 'zutun', '.', 'Genauso', 'geht', 'es', 'seinen', '2', 'Mitpatienten', 'im', 'Zimmer', '.', 'er', 'wurde', 'bei', 'im', 'zig', 'mal', 'versucht', 'den', 'Augendruck', 'zu', 'messen', ',', 'bis', 'dann', 'endlich', 'einer', 'merkte', ',', 'das', 'er', 'eine', 'Schutz', 'Kontaktlinse', 'trägt', '.', 'Gestern', 'sollte', 'er', 'heute', 'entlassen', 'werden', '.', 'Heute', 'wiederum', 'erst', 'in', '2', 'Tagen', '-', 'aber', 'warum', '-', 'keine', 'Info', '.', 'Mein', 'Freund', 'ist', 'Diabetiker', ',', 'aber', 'das', 'Essen', 'da', 'ist', 'nicht', 'Diabetiker', 'geeignet', ',', 'bzw.', 'keiner', 'kann', 'sagen', ',', 'was', 'im', 'Essen', 'ist', 'bzw.', 'wieviel', 'Kohlenhydrate', 'es', 'hat', '.', 'Die', 'Schwestern', 'sind', 'unfreundlich', 'und', 'immer', 'nur', 'genervt', '.', 'Die', 'Zimmer', 'sind', 'auf', '70er', 'Jahre', 'Niveau.Aber', 'das', 'schlimmste', 'ist', 'wirklich', ',', 'daß', 'keine', 'Auskunft', 'geben', 'kann', 'und', 'will', ',', 'was', 'am', 'Patienten', 'gemacht', 'worden', 'ist', 'und', 'ob', 'es', 'gelungen', 'ist', '.', ':', '-', '(', 'Also', 'mein', 'Freund', 'wird', 'diesen', 'Scheißladen', 'nicht', 'mehr', 'aufsuchen', '!', 'Schlimmer', 'geht', 'immer.Ich', 'war', 'wegen', 'meiner', 'Hornhaut', 'Verletzung', 'zur', 'Kontrolle', 'und', 'hatte', 'schon', 'eine', 'Kontaktlinse', 'im', 'Rechten', 'Auge', 'zum', 'Schutz', 'der', 'Hornhaut.Zwei', 'Augenärzte', 'haben', 'sich', 'mein', 'Auge', 'angeschaut', 'und', 'beide', 'sagten', 'das', 'meine', 'Kontaktlinse', 'draussen', 'sei', 'und', 'man', 'mir', 'wieder', 'eine', 'einsetzen', 'möchte', 'zum', 'Schutz.Tatsächlich', 'haben', 'die', 'beiden', 'Ärzte', 'meine', 'Kontaktlinse', 'übersehen', 'und', 'ich', 'hatte', 'somit', 'zwei', 'Kontaktlinsen', 'im', 'Auge.Nach', 'einem', 'Tag', 'sah', 'ich', 'alles', 'Mega', 'Unscharf.Bei', 'meiner', 'Augenärztin', 'zurück', '(', 'sie', 'war', 'im', 'Urlaub', ')', 'fragte', 'sie', 'mich', 'wieso', 'ich', 'zwei', 'Kontaktlinsen', 'im', 'Auge', 'hätte', '?', 'Die', 'zweite', 'Linse', 'hatte', 'in', 'der', 'Zeit', 'schon', 'Wellen', 'geworfen.Soviel', 'Inkompetenz', 'Dummheit', 'Blödheit', 'passt', 'in', 'Braunschweig', 'auf', 'keinen', 'Dampfer', 'drauf.in', 'diesem', 'Jahr', 'wahr', 'ich', '2x', 'zur', 'Augenoperation', 'in', 'der', 'Augenklinik', 'Dr.', 'Hoffmann.Alle', 'behandelnden', 'Ärzte', 'und', 'Schwestern', 'waren', 'sehr', 'freundlich', ',', 'professionell', 'und', 'nahmen', 'sich', 'immer', 'Zeit', 'für', 'mich.Besonders', 'angenehm', 'war', 'die', 'Anästhesistin', '.', 'Schon', 'beim', 'ersten', 'Gespräch', 'strahlte', 'Frau', 'Dr.', 'Sicherheit', 'Fürsorge', 'und', 'Vertrauen', 'aus', '.', 'Im', 'O.P', '.', 'war', 'sie', 'eine', 'große', 'Beruhigung', 'für', 'mich', ',', 'ihre', 'Betreuung', 'war', 'super', '!', 'herzlichen', 'Dank', 'an', 'alle', 'Ärzte', 'und', 'Schwestern', ',', 'die', 'mich', 'auch', 'in', 'dieser', 'Woche', 'so', 'professionell', 'und', 'liebevoll', 'umsorgt', 'haben.Wartezeit', 'in', 'der', 'Regel', '2', 'Stunden', '.', 'Qualifizierte', 'Untersuchungen', 'und', 'gute', 'persönliche', 'Beratung.Gute', 'Noten', 'für', 'Krankenhausbetrieb', 'einschließlich', 'Essen', '.', 'Das', 'erste', 'Krankenhaus', ',', 'in', 'dem', 'ich', 'mich', 'nicht', 'unwohl', 'gefühlt', 'habe', '(', '3', 'Tage', 'mit', 'OP', 'nach', 'Netzhautablösung', ')', '.Sehr', 'empfehlenswert.Sehr', 'kompetente', 'Beratung', ',', 'keine', 'lange', 'Wartezeit', '!', 'Intensive', 'Untersuchung', ',', 'schneller', 'OP', 'Termin', 'und', 'schmerzfreie', 'Katarakt', 'OP', 'mit', 'super', 'Ergebnis', '.', 'Mit', 'Femtolaserbehandlung', 'und', 'Multifokallinse', 'am', 'Tag', 'nach', 'der', 'OP', 'schon', '100', '%', 'sehfähig', '!', 'Bin', 'gespannt', 'wie', 'es', 'bei', 'der', 'Behandlung', 'des', '2', '.', 'Auges', 'geht', '!', 'Wenn', 'man', 'akut', 'ein', 'leichtes', 'Augenproblem', 'hat', ',', 'ist', 'die', 'Klinik', 'zu', 'empfehlen', ',', 'da', 'man', 'ohne', 'Termin', 'dran', 'kommt', '.', 'Aber', ':', 'es', 'muss', 'viel', 'Zeit', 'mitgebracht', 'werden', '.', 'Stundenlanges', 'Warten', 'ist', 'eher', 'die', 'Regel', 'als', 'die', 'Ausnahme', '.', 'Manchmal', 'gilt', 'dies', 'leider', 'auch', 'in', 'Notfällen', ',', 'je', 'nachdem', ',', 'ob', 'die', 'Dame', 'hinter', 'der', 'Anmeldung', 'die', 'Dringlichkeit', 'auch', 'erkennt', '(', 'oder', 'erkennen', 'möchte', ')', '.Wenn', 'man', 'Glück', 'hat', ',', 'und', 'zu', 'einem', 'der', 'Chef-Ärtze', 'vorgelassen', 'wird', ',', 'kann', 'man', 'sicher', 'sein', ',', 'kompetent', 'und', 'nett', 'behandelt', 'zu', 'werden', '.', 'Sonst', 'ist', 'es', 'eher', 'wie', 'beim', 'Roulette', '.', 'Ich', 'bin', 'auch', 'schon', 'trotz', 'ernsthafter', 'Probleme', 'unverrichteter', 'Dinge', 'wieder', 'nach', 'Hause', 'geschickt', 'worden', '...', 'Katarakt-OPs', '(', 'grauer', 'Star', ',', 'neue', 'Kunstlinse', ')', 'kann', 'man', 'm.', 'E.', 'dort', 'relativ', 'problemlos', 'machen', 'lassen', ',', 'mit', 'dem', 'üblichen', 'Restrisiko', '.', 'Die', 'Klinik', 'ist', 'dort', 'erfahren.Auch', 'schwierige', 'Fälle', '(', 'Netzhautriss', ',', 'Netzhautablösung', 'etc.', ')', 'werden', 'kompetent', 'operiert', ',', 'aber', 'die', 'OPs', 'erfolgen', 'm.', 'E.nicht', 'immer', 'ausreichend', 'zeitnah', '.', 'Hier', 'müsste', 'dringend', 'noch', 'schneller', 'reagiert', 'werden.Die', 'Nachbehandlung', 'ist', 'qualitativ', 'wieder', 'sehr', 'uneinheitlich', ',', 'je', 'nachdem', ',', 'auf', 'wen', 'man', 'trifft.Die', 'stationäre', 'Unterbringung', 'in', 'der', 'Klinik', 'hat', 'in', 'vielen', 'Bereichen', 'noch', 'den', 'Charme', 'der', '70er', 'Jahre', '(', '4-Bett-Zimmer', ',', 'Duschen', 'in', 'zu', 'geringer', 'Zahl', ',', 'Sanitäranlagen', 'abgängig', ')', '.', 'Die', 'Essensversorgung', 'ist', 'aber', 'relativ', 'gut', '(', 'wenn', 'auch', 'kein', 'Mittagessen', 'zum', 'Auswählen', ')', 'und', 'das', 'Pflegepersonal', 'größtenteils', 'ganz', 'nett.Leider', 'findet', 'man', 'nicht', 'immer', 'ausreichend', 'schnell', 'jemanden', 'vom', 'Pflegepersonal', '.', 'Die', 'Personaldecke', 'scheint', 'in', 'diesem', 'Bereich', 'zu', 'dünn', 'zu', 'sein.Daher', ':', 'ich', 'kann', 'die', 'Klinik', 'weder', 'eindeutig', 'empfehlen', 'noch', 'eindeutige', 'Kritik', 'üben', '.', 'Wenn', 'man', 'in', 'Braunschweig', 'und', 'Umgebung', 'wohnt', ',', 'ist', 'es', 'halt', 'praktisch', ',', 'dort', 'hin', 'zu', 'gehen', ',', 'und', 'im', 'Regelfall', 'wird', 'man', 'auch', 'kompetent', 'behandelt', '.', 'Aber', 'ich', 'habe', 'halt', 'auch', 'schon', 'das', 'Gegenteil', 'erlebt', '.', 'Es', 'gibt', 'also', 'noch', 'Potential', 'für', 'die', 'Klinik', ',', 'sich', 'zu', 'verbessern', '-', 'und', 'ich', 'habe', 'den', 'Eindruck', ',', 'dass', 'dies', 'erkannt', 'ist', 'und', 'dort', 'daran', 'auch', 'gearbeitet', 'wird', '.'])"
       ]
      },
-     "execution_count": 78,
+     "execution_count": 153,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1365,13 +1381,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 79,
-   "metadata": {
-    "collapsed": true,
-    "jupyter": {
-     "outputs_hidden": true
-    }
-   },
+   "execution_count": 154,
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -2379,7 +2390,7 @@
        " ...]"
       ]
      },
-     "execution_count": 79,
+     "execution_count": 154,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2390,27 +2401,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 83,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "Sentiment(polarity=0.10765957446808505, subjectivity=0.05739952718676123)"
-      ]
-     },
-     "execution_count": 83,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "blob.sentiment"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 84,
+   "execution_count": 156,
    "metadata": {
     "collapsed": true,
     "jupyter": {
@@ -3425,7 +3416,7 @@
        "             ...})"
       ]
      },
-     "execution_count": 84,
+     "execution_count": 156,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3436,7 +3427,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 85,
+   "execution_count": 157,
    "metadata": {
     "collapsed": true,
     "jupyter": {
@@ -3450,7 +3441,7 @@
        "WordList(['meine', 'Laser', 'Op', 'grau', 'Star', 'hat', 'sup', 'klappen', 'Alles', 'laufen', 'wie', 'am', 'Schnürchen', 'ab', 'Danke', 'dafür.danken', 'auch', 'an', 'den', 'neu', 'Küchenchef', 'für', 'das', 'toll', 'Brötchen', 'sein', 'ein', 'Überraschung', 'Mit', 'dem', 'Shuttleservice', 'sein', 'ich', 'auch', 'sehr', 'zufried', 'sehr', 'freundlichen', 'Fahrerrinnen.Also', 'die', 'Klinik', 'sein', 'absolut', 'weiter', 'zu', 'empfehlen.bin', 'sehr', 'zufried', 'sein', 'mit', 'der', 'Klinik', 'und', 'dem', 'Personal', 'Die', 'erst', 'Op', 'verlaufen', 'sehr', 'gut', 'die', 'zweit', 'folgen', 'in', '3', 'Wochen', 'Werde', 'die', 'Klinik', 'auf', 'jed', 'Fall', 'weiterempfehlenkomptentes', 'Ärzteteam.Strickte', 'Einhaltung', 'der', 'Corona', 'Schutzregeln.Rundum', 'zufriedenich', 'kommen', 'seit', 'ein', 'halb', 'Jahr', 'mit', 'mein', 'behindert', 'Frau', 'hier', 'zum', 'Augen-Spritzen', 'auf', 'Grund', 'ein', 'diabetisch', 'Makulasyndroms', 'Ich', 'können', 'bis', 'jetzt', 'nur', 'positiv', 'berichten', 'auch', 'wenn', 'das', 'Wartezimmer', 'sehr', 'voll', 'sein', 'sein', 'wir', 'immer', 'sehr', 'schnell', 'dran', 'und', 'innerhalb', 'ein', 'Stunde', 'fertig', 'Hieren', 'werden', 'der', 'Patient', 'noch', 'als', 'Mensch', 'betrachten', 'und', 'nicht', 'als', 'Nummer', 'es', 'werden', 'mit', 'Namen', 'aufgeruf', 'Kinder', 'mit', 'Vorname', 'Bei', 'Behinderungen', 'werden', 'die', 'Patienten', 'von', 'den', 'immer', 'nett', 'Schwestern', 'betreuen', 'und', 'es', 'werden', 'geholfen', 'Von', 'den', 'Ärzten', 'bekommen', 'man', 'all', 'genau', 'erklären', 'hier', 'fühlt', 'man', 'sich', 'in', 'gut', 'Händ', 'Danke', 'an', 'das', 'gesamt', 'Ärzte', 'und', 'Schwesternteam.Ich', 'sein', 'Anfang', 'November', '2019', 'zur', 'Augen-Op', 'Grau', 'Star', 'in', 'der', 'Klinik', 'und', 'zunächst', 'wegen', 'negativer', 'Meinung', 'voll', 'Bedenken', 'Doch', 'im', 'Gegenteil', 'Sowohl', 'beim', 'Voruntersuchungstermin', 'als', 'auch', 'am', 'Tag', 'der', 'Op', 'kümmern', 'sich', 'das', 'gesamt', 'Klinikpersonal', 'nett', 'und', 'ausführlich', 'beratend', 'um', 'mich.besonders', 'fürsorglich', 'und', 'freundlich', 'begegnete', 'mir', 'die', 'Anästhesieärztin', 'die', 'mir', 'durch', 'ihre', 'beruhigende', 'und', 'verständlich', 'Aufklärung', 'der', 'auf', 'mich', 'zukommenden', 'Ereignisse', 'die', 'Angst', 'vor', 'dem', 'Eingriff', 'nahm.trotz', 'extr', 'hoh', 'Patientenfrequenz', 'erfolgen', 'die', 'Behandlung', 'Untersuchung', 'in', 'angemessen', 'Zeit', 'Ausführlich', 'Untersuchung', 'durch', 'mehrer', 'Ärzte', 'mit', 'entsprechend', 'verständlicher', 'und', 'detailliert', 'Aufklärung', 'über', 'Behandlung', 'und', 'Op-Verlauf', 'Klinikaufenthalt', 'durch', 'akute', 'Behandlung', 'leidern', 'nur', 'in', 'Drei.Bettzimmer', 'möglich', 'sein', 'Dennoch', 'versuchen', 'sowohl', 'Ärzte', 'aus', 'auch', 'das', 'umsichtig', 'und', 'sehr', 'nett', 'Pflegepersonal', 'den', 'Aufenthalt', 'den', 'Umständen', 'entsprechend', 'angenehm', 'zu', 'machen.die', 'postoperativ', 'Versorgung', 'durch', 'die', 'Ärzte', 'sein', 'vorbildlich.diese', 'Klinik', 'sein', 'Nur', 'zu', 'empfehlen', 'Das', 'gesamt', 'Team', 'Ärzte', 'Helferinnen', 'Pflege', 'und', 'Hauswirtschaftspersonal', 'arbeiten', 'ausnahmslos', 'professionell', 'Nach', 'insgesamt', '14', 'Tagen', 'Aufenthalt', 'können', 'ich', 'sagen', 'Nicht', 'ein', 'unfreundlich', 'Wort', 'absolut', 'engmaschige', 'ärztlichen', 'und', 'pflegerisch', 'Betreuung', 'Jederzeien', 'werden', 'ich', 'mich', 'wieder', 'an', 'die', 'Augenklinik', 'wenden', 'Sehr', 'nett', 'und', 'kompetentens', 'Personal', 'Kurz', 'Wartezeiten', 'trotz', 'hoh', 'Frequentierung', 'Gut', 'Aufklärung', 'durch', 'die', 'Ärzte', 'Im', 'Op', 'Bereich', 'nett', 'heiter', 'und', 'gelassen', 'Atmosphäre', 'trotz', 'Stress', 'Meine', 'Mutter', 'fühlen', 'sich', 'dort', 'als', 'Mensch', 'und', 'nicht', 'nur', 'als', 'Patient', 'und', 'Nummer', 'All', 'Mitarbeiter', 'sehr', 'geschult', 'und', 'emphatisch', 'Freundliches', 'Personal', 'kein', 'lange', 'Wartezeit', 'kompetent', 'Behandlungdass', 'es', 'bei', 'ein', 'offen', 'Sprechstunde', 'ein', 'Augenklinik', 'zu', 'lang', 'Wartezeiten', 'kommen', 'sein', 'verständlich', 'trotzdem', 'sein', 'es', 'toll', 'dass', 'es', 'so', 'ein', 'Möglichkeit', 'geben', 'Allerdings', 'war', 'ich', 'nach', 'zwei', 'Stund', 'Warten', 'auf', 'ein', 'Bank', 'oberhalb', 'ein', 'zugigen', 'Treppe', 'schonen', 'sehr', 'durchgefroren.die', 'Arzthelferinnen', 'wirkten', 'freundlich', 'die', 'beid', 'dann', 'untersuchenden', 'Ärztinnen', 'leidern', 'gar', 'nicht', 'Kaum', 'Aufklärung', 'meinen', 'drei', 'Sätze', 'die', 'ich', 'zur', 'Anamnese', 'sagen', 'wollen', 'scheinen', 'uninteressant', 'es', 'werden', 'kein', 'einziges', 'Mal', 'lächeln', 'Fragen', 'von', 'mir', 'am', 'Ende', 'wurden', 'teilweise', 'sehr', 'reizen', 'aufnehmen', 'Geantwortet', 'werden', 'z.t', 'mit', 'genervten', 'rhetorisch', 'Gegenfragen', 'Es', 'sein', 'kein', 'angenehm', 'Atmosphäre', 'und', 'ich', 'traute', 'mich', 'am', 'Ende', 'gar', 'nicht', 'mehr', 'all', 'meine', 'Fragen', 'loszuwerden', 'Ja', 'Ärzte', 'haben', 'oft', 'wenig', 'Zeit', 'und', 'ein', 'stressigen', 'Job', 'Trotzdemen', 'gibt', 'es', 'Ärzte', 'die', 'den', 'Patienten', 'mit', 'Respekt', 'und', 'Empathie', 'begegnen', 'und', 'sogar', 'fragen', 'ob', 'es', 'noch', 'Fragen', 'geben', 'Letztlich', 'sind', 'Ärzte', 'nach', 'Patientenrechtegesetz', 'auch', 'einfach', 'verpflichtet', 'über', 'Diagnose', 'Prognose', 'Behandlungsmöglichkeiten', 'usw', 'aufzuklären', 'und', 'den', 'Patienten', 'zu', 'ermöglichen', 'Fragen', 'zu', 'stellen', 'bis', 'sie', 'all', 'verstehen', 'haben', 'Schade', 'dass', 'das', 'so', 'oft', 'auf', 'der', 'Strecke', 'bleibt.dazu', 'müssen', 'ich', 'sagen', 'dass', 'ich', 'schon', 'einmal', 'bei', 'ein', 'polnisch', 'Arzt', 'in', 'derselben', 'Klinik', 'sein', 'Dies', 'war', 'tatsächlich', 'sehr', 'nett', 'und', 'wirken', 'überhaupt', 'nicht', 'genervt', 'von', 'Fragen.Di', 'Schwestern', 'in', 'der', 'Anmeldung', 'haben', 'ich', 'zum', 'wiederholten', 'Male', 'als', 'sehr', 'unfreundlich', 'genervt', 'und', 'anmassend', 'erleben', 'Zum', 'Teil', 'werden', 'sogar', 'Anweisung', 'der', 'Ärzte', 'nicht', 'ausgeführt', 'Bei', 'all', 'Respekt', 'dass', 'täglich', 'so', 'viel', 'Patienten', 'behandeln', 'werden', 'sollen', 'man', 'doch', 'dies', 'Mitarbeitern', 'einmal', 'klar', 'machen', 'dass', 'sie', 'es', 'mit', 'krank', 'Menschen', 'zu', 'tun', 'haben', 'und', 'dass', 'man', 'ihnen', 'Respekt', 'zollt', 'Schliesslichen', 'kommen', 'dies', 'Menschen', 'nicht', 'aus', 'Jux', 'und', 'Tollerei', 'in', 'die', 'Klinik', 'Der', 'Ton', 'den', 'Assistenzärzten', 'gegenüber', 'lassen', 'auch', 'zu', 'Wünsch', 'übrig', 'so', 'dass', 'es', 'den', 'Patienten', 'sogar', 'peinlich', 'ist', 'Alles', 'in', 'all', 'sehr', 'schade', 'Denn', 'die', 'Ärtzte', 'leisten', 'tadellose', 'Arbeit', 'und', 'dies', 'gut', 'Ruf', 'sollten', 'sie', 'sich', 'nicht', 'durch', 'unmotivierte', 'Mitarbeiter', 'zunichtemach', 'lassen.ich', 'haben', 'die', 'Klinik', 'aufgesucht', 'um', 'schnell', 'ein', 'Diagnose', 'zu', 'bekommen', 'Ander', 'Augenärzte', 'wollen', 'ein', 'Termin', 'in', '6', '8', 'Monaten', 'geben', 'Ich', 'sein', 'um', '07.15', 'Uhr', 'in', 'der', 'Klinik', 'sein', 'und', 'so', 'gegen', '09.30', 'Uhr', 'mit', 'Op-Termin', 'grau', 'Star', 'wieder', 'raus', 'Hätte', 'es', 'bis', 'zum', 'Abend', 'gedauert', 'sein', 'es', 'für', 'mich', 'auch', 'ok', 'sein', 'Schneller', 'als', 'ein', 'Termin', 'in', '6', '8', 'Monaten.Am', 'Op-Tag', 'wurde', 'ich', 'abholen', 'war', 'um', '07.30', 'Uhr', 'in', 'der', 'Klinik', 'und', 'so', 'gegen', '10.00', 'Uhr', 'operiert', 'Ich', 'empfand', 'den', 'gesamt', 'Vorgang', 'wie', 'ein', 'Fliesbandarbeit', 'Was', 'aber', 'nicht', 'so', 'schlimm', 'sein', 'es', 'gab', 'ja', 'noch', 'weiter', 'Patienten', 'und', 'letztendlichen', 'haben', 'es', 'die', 'Op', 'nicht', 'beeinflussen', 'und', 'darauf', 'kommen', 'es', 'mir', 'an', 'Die', 'Unterbringung', 'sein', 'nicht', 'gerade', 'modern', 'aber', 'reicht', 'mein', 'Erachtens', 'aus', 'Verpflegung', 'sein', 'gut', 'und', 'reichlich', 'Betreuung', 'sein', 'auch', 'gut', 'und', 'in', 'all', 'Bereichen', 'nett', 'und', 'höflich.ich', 'können', 'wieder', 'gut', 'sehen', 'und', 'danke', 'all', 'Beteiligten', 'für', 'die', 'gut', 'Arbeit.Ich', 'wollen', 'nichts', 'empfehlen', 'persönlich', 'ist', 'die', 'Klinik', 'mein', 'Ansprechpartner', 'Sollte', 'ich', 'erneuen', 'ein', 'Op', 'benötigen', 'was', 'ich', 'nicht', 'hoffen', 'dann', 'sein', 'ich', 'wieder', 'in', 'dies', 'Klinik', 'und', 'vertraue', 'auf', 'erneuen', 'gut', 'Behandlung', 'In', 'der', 'Anmeldung', 'sein', 'Chaos', 'Nachdem', 'ich', '1', 'Std', 'im', 'Wartezimmer', 'sassen', 'meldete', 'ich', 'mich', 'erneuen', 'bei', 'der', 'Anmeldung', 'und', 'fragte', 'wie', 'lange', 'es', 'daueren', 'Ich', 'war', 'zur', '2', 'Op', 'des', 'Auges', 'bestellen', 'und', 'sagen', 'es', 'nun', 'auch..die', 'Dame', 'daraufhinen', 'Sie', 'müssen', 'sagen', 'was', 'sie', 'wollen', 'Es', 'stehen', 'auf', 'der', 'Überweisung', 'Im', 'Op-Bereich', 'sein', 'alle', 'zuvorkommend', 'und', 'nett', 'in', 'der', 'Anmeldung', 'total', 'überfordert..hallo', 'telefonisch', 'Beratung', 'sein', 'inkompetent', 'Ich', 'haben', 'ein', 'Termin', 'vereinbart', 'und', 'habe', 'fragen', 'was', 'ich', 'für', 'meinen', 'Arbeitsuntersuchung', 'brauche', 'Wenn', 'aber', 'ich', 'schon', 'in', 'der', 'Klinik', 'sein', 'habe', 'ich', 'erfahren', 'dass', 'ich', 'noch', 'einig', 'Unterlagen', 'brauche', 'die', 'ich', 'natürlich', 'dabei', 'nicht', 'haben', 'Darüber', 'haben', 'mir', 'telefonisch', 'nichts', 'sagen', 'Und', 'in', 'der', 'Klinik', 'wissen', 'die', 'Beratung', 'selbst', 'nicht', 'welche', 'Leistungen', 'sie', 'anbieten.ich', 'sein', 'sehr', 'enttäuscht', 'und', 'haben', 'viel', 'Zeit', 'verloren.hut', 'ab', 'Am', '19', 'Februar', '2017', 'kommen', 'ich', 'als', 'Notfall', 'in', 'die', 'Klinik', 'Bereits', 'am', 'Empfang', 'haben', 'ich', 'freundlich', 'und', 'kompetent', 'Mitarbeiterinnen', 'schätzen', 'lernen', 'Die', 'verschieden', 'Ärzte', 'die', 'für', 'meinen', 'baldig', 'Genesung', 'sorgten', 'können', 'ich', 'nur', 'über', 'den', 'Klee', 'loben', 'Ich', 'haben', 'zwar', 'kein', 'weiter', 'Erfahrungen', 'Gott', 'sein', 'Dank', 'aber', 'das', 'ich', 'so', 'schnell', 'wieder', 'genesen', 'sein', 'schreibe', 'ich', 'den', 'behandelnden', 'Ärzten', 'und', 'den', 'überaus', 'freundlich', 'Pflegepersonal', 'in', 'dies', 'positiv', 'Kritik.Abschliessend', 'bedanke', 'ich', 'mich', 'nochmals', 'herzlich', 'dafür', 'dass', 'Sie', 'mein', 'linkes', 'Auge', 'retten', 'können', 'Ich', 'sehe', 'inzwischen', 'besser', 'als', 'zuvor', 'Beste', 'Grüss', 'Rolf-Wilhelm', 'Eimeckeich', 'sein', 'an', 'Diabetes', 'erkrankt', 'und', 'haben', 'leider', 'auch', 'schon', 'Folgeschäden', 'im', 'Auge', 'Beid', 'Augen', 'sein', 'betreffen', 'Auf', 'beid', 'Augen', 'ist', 'Flüssigkeit', 'auf', 'der', 'Netzhaut', 'Zusätzlich', 'sein', 'in', 'dem', 'Glaskörper', 'des', 'rechen', 'Auges', 'ein', 'Blutung', 'welche', 'sich', 'bislang', 'nicht', 'von', 'alleine', 'zurückbilden', 'haben', 'Auch', 'nicht', 'nach', 'ein', 'sehr', 'schmerzhaft', 'Laserbehandlung', 'mit', 'etwa', '500', 'Schuss', 'Hinzuen', 'kommt', 'noch', 'das', 'beid', 'Linsen', 'getrübt', 'sein', 'Grauer', 'Star', 'Mir', 'werden', 'in', 'dies', 'Klinik', 'immer', 'sagen', 'dass', 'man', 'die', 'Linse', 'nicht', 'durch', 'ein', 'künstlich', 'ersetzen', 'kann', 'solange', 'noch', 'Flüssigkeit', 'auf', 'der', 'Netzhaut', 'sein', 'Das', 'haben', 'ich', 'so', 'hingenommen', 'und', 'haben', 'entsprechend', 'Injektionen', 'und', 'Lasereingriffe', 'in', 'beid', 'Augen', 'durchführen', 'lassen', '11', 'Spritze', 'links', '3', 'rechts', 'Es', 'sein', 'immer', 'mit', 'ein', 'erhöhten', 'bis', 'unzumutbaren', 'Wartezeit', 'verbinden', 'Die', 'Terminvergabe', 'sein', 'zwar', 'in', 'dem', 'Augenblick', 'okay', 'wenn', 'man', 'sie', 'erhalten', 'doch', 'dann', 'bei', 'dem', 'Besuch', 'zum', 'Termin', 'wundert', 'man', 'sich', 'wenn', 'man', 'drei', 'wie', 'oder', 'mehr', 'Stunden', 'warten', 'müssen', 'Ich', 'für', 'mich', 'haben', 'seit', 'gestern', 'die', 'Nase', 'gestrich', 'voll', 'Im', 'Warteraum', 'sassen', 'über', '20', 'Personen', 'Bereits', 'operierte', 'Personen', 'die', 'Ruhe', 'brauchen', 'aber', 'auch', 'auf', 'den', 'eingriff', 'wartende', 'Personen', 'Überwiegend', 'sein', 'es', 'natürlich', 'älter', 'Personen', 'die', 'sich', 'dort', 'quälen', 'müssen', 'Teilweise', 'müssen', 'sie', 'stehen', 'da', 'nicht', 'mal', 'ausreichend', 'Platz', 'zum', 'sitzen', 'vorhand', 'war', 'Ein', 'älter', 'Person', 'warten', 'seit', '9', 'Uhr', 'auf', 'seinen', 'Eingriff', 'Als', 'ich', 'mit', 'meinem', 'Termin', 'um', '11', 'Uhr', 'ankam', 'und', 'das', 'hören', 'sein', 'ich', 'erschrock', 'dass', 'man', 'ein', 'älter', 'Mann', 'ca', '75', 'Jahre', 'dort', 'solange', 'warten', 'lesen', 'Bevor', 'ich', 'dann', 'gegen', '12.30', 'Uhr', 'rankam', 'kommen', 'dies', 'Mann', 'gerade', 'geschwächt', 'aus', 'dem', 'Op', 'Das', 'sein', 'nur', 'ein', 'Einzelfall', 'Ich', 'selb', 'haben', 'die', 'Klinik', 'gegen', '13.30', 'Uhr', 'verlassen', 'dürfen.es', 'sein', 'auch', 'schon', 'vorgekommen', 'dass', 'man', 'meine', 'Gesundheitskarte', 'der', 'Krankenkasse', 'gar', 'nicht', 'eingelesen', 'haben', 'ein', 'Arbeitsunfähigkeitsbescheinigung', 'falsch', 'oder', 'gar', 'nicht', 'ausstellen', 'haben', 'Zu', 'all', 'den', 'Sachen', 'müssen', 'ich', 'erneut', 'in', 'die', 'Klinik', 'fahren', 'Eines', 'Tages', 'wollen', 'man', 'nur', 'ein', 'Auge', 'behandeln', 'aber', 'man', 'wollen', 'mir', 'beid', 'Augen', 'tropfen', 'Das', 'zeigen', 'mir', 'erneut', 'wie', 'durcheinander', 'dort', 'die', 'Organisation', 'sein', 'Nach', 'den', 'ganz', 'Quälerein', 'haben', 'man', 'mir', 'dann', 'ein', 'Termin', 'für', 'ein', 'grösser', 'Op', 'im', 'rechen', 'Augen', 'geben', 'Man', 'wollen', 'nun', 'endlich', 'mal', 'ein', 'Linse', 'ersetzen', 'und', 'gleichzeitig', 'den', 'Glaskörper', 'entfernen', 'Da', 'haben', 'ich', 'mich', 'entschloss', 'mir', 'ein', 'zweit', 'Meinung', 'einzuholen', 'und', 'haben', 'die', 'Klinik', 'gewechselt', 'Schade', 'dass', 'ich', 'nur', '2000', 'Zeichen', 'dürfen', 'Anbahnung', 'und', 'Voruntersuchung', 'für', 'ein', 'Katarakt-Op', 'bekam', 'ich', 'ohne', 'Termin', 'Der', 'Preis', 'dafüren', 'sein', 'lang', 'Warten', 'zwischen', 'den', 'Untersuchungen', 'Das', 'Ganze', 'ziehen', 'sich', 'über', 'ca', '4', 'Stunden', 'Auffallend', 'sein', 'dass', 'das', 'Personal', 'kein', 'Motivation', 'haben', 'den', 'Patienten', 'jeweils', 'darüber', 'zu', 'informieren', 'was', 'gerade', 'machen', 'werden', 'Man', 'bekam', 'nur', 'Anweisung', 'Machen', 'Sie', 'die', 'gehen', 'Sie', 'da', 'Niemand', 'stellen', 'sich', 'vor', 'Am', 'Ende', 'stehen', 'ein', 'halblegal', 'Aufnahmegespräch', 'mit', 'ein', 'Arzt', 'Es', 'wurde', 'Persönlich', 'abfragen', 'Vorerkrankungen', 'Allergien', 'etc', 'Ein', 'Medikamentenname', 'reichen', 'als', 'Info', 'nicht', 'das', 'führen', 'zu', 'langem', 'Suchen', 'in', 'der', 'Datenbank', 'haben', 'ich', 'Dummerle', 'mir', 'nur', 'den', 'Wirkstoff', 'merken', 'Der', 'Arzt', 'halten', 'mich', 'wohl', 'für', 'ein', 'arm', 'Schluckern', 'denn', 'es', 'folgen', 'weder', 'ein', 'Aufklärung', 'über', 'all', 'Möglichkeiten', 'verschiedenst', 'Linsentypen', 'Lichtfilter', 'Multifokal', 'unterschiedlich', 'Augeneinstellung', 'noch', 'über', 'die', 'tatsächlich', 'Risiken', 'und', 'ihre', 'Wahrscheinlichkeit', 'Es', 'werden', 'kurz', 'mein', 'Beruf', 'ansprechen', 'und', 'der', 'Arzt', 'entscheiden', 'dann', 'was', 'wohl', 'das', 'Beste', 'für', 'mich', 'sein', 'Ich', 'bekamm', 'ein', 'Faltblatt', 'zur', 'Unterschrift', 'vorgehalten', 'auf', 'dem', 'ein', 'paar', 'aufgemalte', 'Kreise', 'wohlen', 'die', 'grösst', 'Risiken', 'markieren', 'sollten', 'Mit', 'meinen', 'Augen', 'können', 'ich', 'das', 'fasen', 'nicht', 'lesen', 'Beim', 'Op-Termin', 'sein', 'die', 'Abfertigung', 'schnell', 'die', 'nötigen', 'Augentropfen', 'bekamen', 'all', 'Patienten', 'schon', 'im', 'Warteraum', 'auch', 'ein', 'Fragebogen', 'mit', 'unlesbar', 'klein', 'Schrift', 'sein', 'zu', 'unterschreiben', 'Absicht', 'Mein', 'Begleitung', 'fallen', 'noch', 'ein', 'besonders', 'freundlich', 'Behandlung', 'für', 'Privatpatienten', 'auf', 'Die', 'Op', 'verlaufen', 'dann', 'ohne', 'viel', 'Wort', 'Den', 'Operateur', 'Konnte', 'Ich', 'Weder', 'Sehen', 'sein', 'vor', 'Augenabdeckung', 'nicht', 'da', 'Noch', 'Hat', 'Er', 'Sich', 'Vorgestellt', 'Gehen', 'gar', 'nicht', 'Danach', 'Tschüss', 'Kommen', 'sie', 'morgen', 'wieder', 'Auch', 'bei', 'der', 'Erstkontrolle', 'kein', 'Verhaltensregeln', 'nichts', 'Als', 'ich', 'bei', 'der', 'Zweitkontrolle', 'meine', 'Probleme', 'schilderte', 'wurde', 'nicht', 'darauf', 'eingehen', 'vertröstet', 'und', 'wir', 'sehen', 'Sie', 'bei', 'der', 'zweit', 'Op', 'tschüss', 'Die', 'habe', 'ich', 'absagen', 'und', 'lassen', 'nun', 'Alles', 'durch', 'ein', 'Augenarzt', 'überprüfen', 'Mein', 'Freund', 'liegen', 'grad', 'stationär', 'in', 'der', 'Klinik', 'und', 'was', 'da', 'abläuft', 'gehen', 'garnicht', '4', 'Tage', 'nach', 'der', 'Op', 'weeissen', 'er', 'immer', 'noch', 'nicht', 'ob', 'all', 'gut', 'gehen', 'sein', 'und', 'was', 'nun', 'genau', 'machen', 'worden', 'sein', 'Die', 'Ärzte', 'haben', 'entweder', 'kein', 'Zeit', 'oder', 'jed', 'sagen', 'was', 'ander', 'Der', 'Arzt', 'der', 'ihn', 'operierte', 'sein', 'nicht', 'greifbar', 'und', 'haben', 'immer', 'zutun', 'Genauso', 'gehen', 'es', 'seinen', '2', 'Mitpatienten', 'im', 'Zimmer', 'er', 'werden', 'bei', 'im', 'zig', 'mal', 'versuchen', 'den', 'Augendruck', 'zu', 'messen', 'bis', 'dann', 'endlich', 'ein', 'merkte', 'das', 'er', 'ein', 'Schutz', 'Kontaktlinse', 'tragen', 'Gestern', 'sollen', 'er', 'heuen', 'entlassen', 'werden', 'Heute', 'wiederum', 'erst', 'in', '2', 'Tagen', 'aber', 'warum', 'kein', 'Info', 'Mein', 'Freund', 'sein', 'Diabetiker', 'aber', 'das', 'Esse', 'da', 'sein', 'nicht', 'Diabetiker', 'geeignet', 'bzw', 'kein', 'können', 'sagen', 'was', 'im', 'Esse', 'sein', 'bzw', 'wieviel', 'Kohlenhydrate', 'es', 'haben', 'Die', 'Schwestern', 'sein', 'unfreundlich', 'und', 'immer', 'nur', 'genervt', 'Die', 'Zimmer', 'sein', 'auf', '70er', 'Jahre', 'Niveau.Aber', 'das', 'schlimmste', 'sein', 'wirklich', 'dass', 'kein', 'Auskunft', 'geben', 'können', 'und', 'wollen', 'was', 'am', 'Patienten', 'machen', 'worden', 'sein', 'und', 'ob', 'es', 'gelungen', 'ist', 'Also', 'mein', 'Freund', 'werden', 'dies', 'Scheissladen', 'nicht', 'mehr', 'aufsuchen', 'Schlimmer', 'gehen', 'immer.ich', 'war', 'wegen', 'mein', 'Hornhaut', 'Verletzung', 'zur', 'Kontrolle', 'und', 'haben', 'schon', 'ein', 'Kontaktlinse', 'im', 'Rechten', 'Auge', 'zum', 'Schutz', 'der', 'Hornhaut.Zwei', 'Augenärzte', 'haben', 'sich', 'mein', 'Auge', 'angeschaut', 'und', 'beid', 'sagten', 'das', 'meine', 'Kontaktlinse', 'draussen', 'sein', 'und', 'man', 'mir', 'wieder', 'ein', 'einsetzen', 'mögen', 'zum', 'Schutz.Tatsächlichen', 'haben', 'die', 'beid', 'Ärzte', 'meinen', 'Kontaktlinse', 'übersehen', 'und', 'ich', 'haben', 'somit', 'zwei', 'Kontaktlinsen', 'im', 'Auge.Nach', 'ein', 'Tag', 'sehen', 'ich', 'all', 'Mega', 'Unscharf.Bei', 'mein', 'Augenärztin', 'zurück', 'sie', 'sein', 'im', 'Urlaub', 'fragte', 'sie', 'mich', 'wieso', 'ich', 'zwei', 'Kontaktlinsen', 'im', 'Auge', 'haben', 'Die', 'zweit', 'Linse', 'haben', 'in', 'der', 'Zeit', 'schon', 'Welle', 'geworfen.soviel', 'Inkompetenz', 'Dummheit', 'Blödheit', 'passt', 'in', 'Braunschweig', 'auf', 'kein', 'Dampfer', 'drauf.in', 'dies', 'Jahr', 'wahr', 'ich', '2x', 'zur', 'Augenoperation', 'in', 'der', 'Augenklinik', 'Dr', 'Hoffmann.Alle', 'behandelnden', 'Ärzte', 'und', 'Schwestern', 'sein', 'sehr', 'freundlich', 'professionell', 'und', 'nehmen', 'sich', 'immer', 'Zeit', 'für', 'mich.besonders', 'angenehm', 'sein', 'die', 'Anästhesistin', 'Schon', 'beim', 'erst', 'Gespräch', 'strahlte', 'Frau', 'Dr', 'Sicherheit', 'Fürsorge', 'und', 'Vertrauen', 'aus', 'Im', 'O.P', 'sein', 'sie', 'ein', 'gross', 'Beruhigung', 'für', 'mich', 'ihre', 'Betreuung', 'sein', 'sup', 'herzlich', 'Dank', 'an', 'all', 'Ärzte', 'und', 'Schwestern', 'die', 'mich', 'auch', 'in', 'dies', 'Woche', 'so', 'professionell', 'und', 'liebevoll', 'umsorgen', 'haben.wartezeit', 'in', 'der', 'Regel', '2', 'Stunden', 'Qualifizierte', 'Untersuchungen', 'und', 'gut', 'persönlich', 'Beratung.Gut', 'Noten', 'für', 'Krankenhausbetrieb', 'einschliesslich', 'Esse', 'Das', 'erst', 'Krankenhaus', 'in', 'dem', 'ich', 'mich', 'nicht', 'unwohl', 'fühlen', 'haben', '3', 'Tage', 'mit', 'Op', 'nach', 'Netzhautablösung', 'Sehr', 'empfehlenswert.sehr', 'kompetent', 'Beratung', 'kein', 'lange', 'Wartezeit', 'Intensiv', 'Untersuchung', 'schnell', 'Op', 'Termin', 'und', 'schmerzfreie', 'Katarakt', 'Op', 'mit', 'sup', 'Ergebnis', 'Mit', 'Femtolaserbehandlung', 'und', 'Multifokallinse', 'am', 'Tag', 'nach', 'der', 'Op', 'schon', '100', 'sehfähig', 'Bin', 'gespannt', 'wie', 'es', 'bei', 'der', 'Behandlung', 'des', '2', 'Auges', 'gehen', 'Wenn', 'man', 'akut', 'ein', 'leichtes', 'Augenproblem', 'haben', 'sein', 'die', 'Klinik', 'zu', 'empfehlen', 'da', 'man', 'ohne', 'Termin', 'dran', 'kommen', 'Aber', 'es', 'müssen', 'viel', 'Zeit', 'mitgebracht', 'werden', 'Stundenlanges', 'Warten', 'sein', 'eher', 'die', 'Regel', 'als', 'die', 'Ausnahme', 'Manchmal', 'gelten', 'die', 'leider', 'auch', 'in', 'Notfällen', 'je', 'nachdem', 'ob', 'die', 'Dame', 'hinter', 'der', 'Anmeldung', 'die', 'Dringlichkeit', 'auch', 'erkennt', 'oder', 'erkennen', 'mögen', 'Wenn', 'man', 'Glück', 'haben', 'und', 'zu', 'ein', 'der', 'Chef-Ärtze', 'vorgelassen', 'werden', 'können', 'man', 'sicher', 'sein', 'kompetent', 'und', 'nett', 'behandeln', 'zu', 'werden', 'Sonst', 'sein', 'es', 'eher', 'wie', 'beim', 'Roulette', 'Ich', 'sein', 'auch', 'schon', 'trotz', 'ernsthaft', 'Probleme', 'unverrichteter', 'Dinge', 'wiedern', 'nach', 'Hause', 'schicken', 'worden', 'Katarakt-Ops', 'grau', 'Star', 'neu', 'Kunstlinse', 'können', 'man', 'm', 'E', 'doren', 'relativ', 'problemlos', 'machen', 'lassen', 'mit', 'dem', 'üblich', 'Restrisiko', 'Die', 'Klinik', 'sein', 'dort', 'erfahren.auch', 'schwierig', 'Fälle', 'Netzhautriss', 'Netzhautablösung', 'etc', 'werden', 'kompetent', 'operiert', 'aber', 'die', 'Ops', 'erfolgen', 'm', 'E.Nicht', 'immern', 'ausreichend', 'zeitnah', 'Hie', 'müssen', 'dringend', 'noch', 'schnell', 'reagieren', 'werden.die', 'Nachbehandlung', 'sein', 'qualitativ', 'wieder', 'sehr', 'uneinheitlich', 'je', 'nachdem', 'auf', 'wen', 'man', 'trifft.die', 'stationär', 'Unterbringung', 'in', 'der', 'Klinik', 'haben', 'in', 'viel', 'Bereichen', 'noch', 'den', 'Charme', 'der', '70er', 'Jahre', '4-bett-zimmer', 'Duschen', 'in', 'zu', 'gering', 'Zahl', 'Sanitäranlagen', 'abgängig', 'Die', 'Essensversorgung', 'sein', 'aber', 'relativ', 'gut', 'wenn', 'auch', 'kein', 'Mittagessen', 'zum', 'Auswählen', 'und', 'das', 'Pflegepersonal', 'grösstenteils', 'ganz', 'nett.leider', 'finden', 'man', 'nicht', 'immer', 'ausreichend', 'schnell', 'jemanden', 'vom', 'Pflegepersonal', 'Die', 'Personaldecke', 'scheinen', 'in', 'dies', 'Bereich', 'zu', 'dünn', 'zu', 'sein.daher', 'ich', 'können', 'die', 'Klinik', 'weder', 'eindeutig', 'empfehlen', 'noch', 'eindeutige', 'Kritik', 'üben', 'Wenn', 'man', 'in', 'Braunschweig', 'und', 'Umgebung', 'wohnt', 'sein', 'es', 'halt', 'praktisch', 'dort', 'hin', 'zu', 'gehen', 'und', 'im', 'Regelfall', 'werden', 'man', 'auch', 'kompetent', 'behandeln', 'Aber', 'ich', 'haben', 'halt', 'auch', 'schon', 'das', 'Gegenteil', 'erleben', 'Es', 'gibt', 'also', 'noch', 'Potential', 'für', 'die', 'Klinik', 'sich', 'zu', 'verbessern', 'und', 'ich', 'haben', 'den', 'Eindruck', 'dass', 'die', 'erkennen', 'sein', 'und', 'dort', 'daran', 'auch', 'arbeiten', 'werden'])"
       ]
      },
-     "execution_count": 85,
+     "execution_count": 157,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3460,14 +3451,36 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Wir bekommen die Ergebnisse, Polarität und Subjektivität der Bewertungen"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 86,
-   "metadata": {
-    "collapsed": true,
-    "jupyter": {
-     "outputs_hidden": true
+   "execution_count": 155,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sentiment(polarity=0.10765957446808505, subjectivity=0.05739952718676123)"
+      ]
+     },
+     "execution_count": 155,
+     "metadata": {},
+     "output_type": "execute_result"
     }
-   },
+   ],
+   "source": [
+    "blob.sentiment"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 158,
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
