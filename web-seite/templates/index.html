@@ -58,11 +58,14 @@
         <form id="search" class="col-6" style="text-align:center;"> 
 
           <select class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected>Auswählen Sie ein Klinik</option>
+            {% for clinic in clinics %}
+            <option value="{{clinic}}">{{clinic}}</option> 
+            {% endfor %}        
           </select>
+          <br>
+          
+          <!-- <button class="btn btn-primary">Auswählen</button> -->
           <button type="button" class="btn btn-outline-danger col-4">Search</button>
         </form>
       </div>
