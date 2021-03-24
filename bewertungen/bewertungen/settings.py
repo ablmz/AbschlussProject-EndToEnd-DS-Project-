@@ -18,6 +18,10 @@ NEWSPIDER_MODULE = 'bewertungen.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+FEED_EXPORT_ENCODING='UTF-8'
+
+
+# Splash stuff
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

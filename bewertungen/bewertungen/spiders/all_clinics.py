@@ -7,18 +7,19 @@ class TestSpider(scrapy.Spider):
     name = 'test'
     
      # output csv
-    # custom_settings ={
-    #     'FEED_EXPORT_ENCODING':'UTF-8',
-    #     'FEED_FORMAT':'csv',
-    #     'FEED_URI':'output.csv'
-    # }
+    custom_settings ={
+        
+        'FEED_EXPORT_ENCODING':'UTF-8',
+        'FEED_FORMAT':'csv',
+        'FEED_URI':'output.csv'
+    }
 
     #output for json
-    custom_settings ={
-      'FEED_EXPORT_ENCODING':'UTF-8',
-      'FEED_FORMAT':'json',
-      'FEED_URI':'output.json'}
-
+    # custom_settings ={
+    #   'FEED_EXPORT_ENCODING':'UTF-8',
+    #   'FEED_FORMAT':'json',
+    #   'FEED_URI':'output.json'}
+    
     def start_requests(self):
         urls = [
             'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-augenklinik-dr-hoffmann-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-marienstift-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-kliniken-herzogin-elisabeth-braunschweig',

@@ -1,10 +1,50 @@
 import scrapy
+from  scrapy import Request
+from scrapy.crawler import CrawlerProcess
+import csv
+# from scrapy_splash import SplashRequest
+
 
 
 class TestSpider(scrapy.Spider):
+   
+
     name = 'test'
-    allowed_domains = ['klinikbewertungen.de']
-    start_urls = ['https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-marienstift-braunschweig']
+    
+    # output
+    custom_settings ={
+        'FEED_FORMAT':'csv',
+        'FEED_URI':'output.csv'
+    }
+    
+
+    def start_requests(self):
+        urls = [
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-augenklinik-dr-hoffmann-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-marienstift-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-kliniken-herzogin-elisabeth-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-goettingen',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-tiefenbrunn-rosdorf',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-friederikenstift-hannover',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-annastift-hannover',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-drk-clementinenhaus-hannover',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-sophien-klinik-hannover',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-grossburgwedel',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-lehrte',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-lindenbrunn-coppenbruegge',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-hameln',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-kreis-und-stadtkrankenhaus-alfeld',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-hildesheim',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-bethel-bueckeburg',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-stadtkrankenhaus-cuxhaven',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-bremervoerde',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-klinik-fallingbostel',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-klinikum-emden',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-ludmillenstift-meppen',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-marienhospital-papenburg',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-osterholz-scharmbeck',
+            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-soltau']
+
+        for url in urls:
+            yield Request(url, callback=self.parse)
+
 
     def parse(self, response):
         next_page = response.xpath("//a[@class='raquo button']/@href").get()
@@ -19,6 +59,8 @@ class TestSpider(scrapy.Spider):
 
         # Mehr values
         all_reviews = response.xpath("//div[@class='list ratinglist']/article")
+
+        
 
         for review in all_reviews:            
             review_title = review.xpath(".//header[@style='float:left;']/h2/text()").get()
@@ -107,11 +149,7 @@ class TestSpider(scrapy.Spider):
                 else:
                     daumen = 'Daumen runter'
             
-
-            
-
-            #print((((xx[2].strip()).split('|')[0])).strip())
-
+         
             yield{
                 'Name der Klinik':klinik_name,
                 'bewertungen':bewertungen.strip(),
@@ -139,3 +177,9 @@ class TestSpider(scrapy.Spider):
                 'Daumen':daumen
                 
             }
+
+            
+if __name__ == '__main__':
+    process = CrawlerProcess()
+    process.crawl(TestSpider)
+    process.start()
