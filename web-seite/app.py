@@ -6,6 +6,9 @@ app = Flask(__name__)
 reviews = pd.read_csv("output.csv")
 clinics = reviews["Name der Klinik"].unique()
 
+    
+
+
 @app.route('/')
 
 def index():
@@ -16,9 +19,17 @@ def index():
 @app.route('/ergebnisse', methods=["GET","POST"])
 
 def ergebnisse():
-    select = request.form.get("klinikNameList")
-    print(select)
-    return render_template("ergebnisse.html", clinics=clinics, klinikName=str(select)) 
+    select = str(request.form.get("klinikNameList"))
+    klinik=reviews.loc[reviews["Name der Klinik"]==select]
+    
+    kTitle=klinik["Title"]
+    print(kTitle)
+    kDatum=klinik["Datum der Bewertung"]
+    kSterne=klinik["Gesamtzufriedenheit"]
+    kPro=klinik["Pro"]
+    kKontra=klinik["Kontra"]
+    kText=klinik["Erfahrungsbericht"]
+    return render_template("ergebnisse.html", clinics=clinics, klinikName=select,  kTitle= kTitle, kDatum=kDatum ) 
     
 
 
