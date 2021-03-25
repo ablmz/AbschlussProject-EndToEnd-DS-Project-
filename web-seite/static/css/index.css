@@ -4,8 +4,11 @@
     background-position: center center;
     
 }
+.ep-height{
+    height: 20vh; 
+}
 
-#hero .container {
+#hero .hp-height {
     height: 50vh;
 }
 
