@@ -95,12 +95,28 @@
                         </li>
                         
                     </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade " id="google" role="tabpanel" aria-labelledby="google-tab">...
+                    <div class="tab-content mb-4" id="myTabContent">
+                        <div class="tab-pane fade show active" id="google" role="tabpanel" aria-labelledby="google-tab">
+                            {% for info in gInfos%}
+                            <div class="card mb-3 col-12 border-dark">
+   
+                                <div class="card-body">
+                                    <!-- <h5 class="card-title text-danger text-uppercase">{{info[0]}}</h5> -->
+                                    <h6 class="card-title">{{info[0]}}</h6>
+                                    <hr class="text-danger">
+                                    <p class="card-text">{{info[1]}}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-text mb-0"><small class="text-muted"><i class="far fa-thumbs-up mx-2 text-dark"></i>{{info[2]}}</small></p>
+                                        <p class="card-text mb-0"><small class="text-muted">{{info[3]}}</small></p>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                            {% endfor%}
                         </div>
-                        <div class="tab-pane fade show active" id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
+                        <div class="tab-pane fade " id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
                             {% for info in kInfos %}
-                                <div class="card mb-3 col-10 border-dark">
+                                <div class="card mb-3 col-12 border-dark">
     
                                     <div class="card-body">
                                         <h5 class="card-title text-danger text-uppercase">{{ info[0] }}</h5>
