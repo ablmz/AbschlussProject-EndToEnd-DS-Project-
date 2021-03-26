@@ -4,9 +4,26 @@ import pandas as pd
 app = Flask(__name__)
 
 reviews = pd.read_csv("output.csv")
+gDatai=pd.read_csv("ggl_scrap_allurl_22.csv")
 clinics = reviews["Name der Klinik"].unique()
+klinikInfos=[]
+gKlinikInfos=[]
 
-    
+def getGoogleInfos(select): 
+    klinik=reviews.loc[reviews['Name der Klinik']==select]
+    k=klinik[["Title","Pro","Kontra","Erfahrungsbericht","Gesamtzufriedenheit","Datum der Bewertung"]]
+    for i in range(len(k)):
+        info=list(k.iloc[i])
+        klinikInfos.append(info)
+    return klinikInfos
+
+def getInfos(select): 
+    klinik=reviews.loc[reviews['Name der Klinik']==select]
+    k=klinik[["Title","Pro","Kontra","Erfahrungsbericht","Gesamtzufriedenheit","Datum der Bewertung"]]
+    for i in range(len(k)):
+        info=list(k.iloc[i])
+        klinikInfos.append(info)
+    return klinikInfos
 
 
 @app.route('/')
@@ -20,16 +37,9 @@ def index():
 
 def ergebnisse():
     select = str(request.form.get("klinikNameList"))
-    klinik=reviews.loc[reviews["Name der Klinik"]==select]
     
-    kTitle=klinik["Title"]
-    print(kTitle)
-    kDatum=klinik["Datum der Bewertung"]
-    kSterne=klinik["Gesamtzufriedenheit"]
-    kPro=klinik["Pro"]
-    kKontra=klinik["Kontra"]
-    kText=klinik["Erfahrungsbericht"]
-    return render_template("ergebnisse.html", clinics=clinics, klinikName=select,  kTitle= kTitle, kDatum=kDatum ) 
+    kInfos=getInfos(select)
+    return render_template("ergebnisse.html", clinics=clinics, klinikName=select, kInfos=kInfos ) 
     
 
 
