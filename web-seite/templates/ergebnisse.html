@@ -98,37 +98,41 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="google" role="tabpanel" aria-labelledby="google-tab">
                             {% for info in gInfos%}
-                            <div class="card mb-3 col-12 border-end">
+                           
+                            <div class="card mb-3 col-12 border-0">
    
                                 <div class="card-body">
-                                    <!-- <h5 class="card-title text-danger text-uppercase">{{info[0]}}</h5> -->
+                                    <h5 class="card-title text-danger text-uppercase">Bewertung</h5>
                                     <h6 class="card-title">{{info[0]}}</h6>
-                                    <hr class="text-danger">
+                                    
                                     <p class="card-text">{{info[1]}}</p>
                                     <div class="d-flex justify-content-between">
                                         <p class="card-text mb-0"><small class="text-muted"><i class="far fa-thumbs-up mx-2 text-dark"></i>{{info[2]}}</small></p>
                                         <p class="card-text mb-0"><small class="text-muted">{{info[3]}}</small></p>
                                     </div>
-                        
+                                    <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach TextBlobDE als {{info[4]}} wahrgenommen. </small></p>
+                                    <hr class="text-muted">
                                 </div>
                             </div>
+                           
                             {% endfor%}
                         </div>
                         <div class="tab-pane fade " id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
                             {% for info in kInfos %}
-                                <div class="card mb-3 col-12 border-warning">
+                                <div class="card mb-3 col-12 border-0">
     
                                     <div class="card-body">
                                         <h5 class="card-title text-danger text-uppercase">{{ info[0] }}</h5>
                                         <h6 class="card-title">Pro :{{ info[1] }}</h6>
                                         <h6 class="card-title">Kontra: {{ info[2] }}</h6>
-                                        <hr class="text-danger">
+                                        
                                         <p class="card-text">{{ info[3] }}</p>
                                         <div class="d-flex justify-content-between">
                                             <p class="card-text mb-0"><small class="text-muted">{{ info[4] }}</small></p>
                                             <p class="card-text mb-0"><small class="text-muted">{{ info[5] }}</small></p>
                                         </div>
-                            
+                                        <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach TextBlobDE als {{info[6]}} wahrgenommen. </small></p>
+                                        <hr class="text-muted">
                                     </div>
                                 </div>
                             {% endfor %}

@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,url_for,redirect
+import os
 import pandas as pd
 
 app = Flask(__name__)
@@ -12,7 +13,7 @@ gKlinikInfos=[]
 
 def getGoogleInfos(select): 
     gklinik=gDatai.loc[gDatai["Name_der_Klinik"]==select]
-    k=gklinik[["Sternbewertung","Textuelle_Bewertung","Likes","Datum_der_Bewertung"]]
+    k=gklinik[["Sternbewertung","Textuelle_Bewertung","Likes","Datum_der_Bewertung",'sentimentBewertung']]
     for i in range(len(k)):
         info=list(k.iloc[i])
         gKlinikInfos.append(info)
@@ -20,7 +21,7 @@ def getGoogleInfos(select):
 
 def getInfos(select): 
     klinik=reviews.loc[reviews['Name der Klinik']==select]
-    k=klinik[["Title","Pro","Kontra","Erfahrungsbericht","Gesamtzufriedenheit","Datum der Bewertung"]]
+    k=klinik[["Title","Pro","Kontra","Erfahrungsbericht","Gesamtzufriedenheit","Datum der Bewertung",'sentimentBewertung']]
     for i in range(len(k)):
         info=list(k.iloc[i])
         klinikInfos.append(info)
