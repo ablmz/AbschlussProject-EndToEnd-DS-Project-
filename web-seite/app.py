@@ -14,6 +14,7 @@ gKlinikInfos=[]
 def getGoogleInfos(select): 
     gklinik=gDatai.loc[gDatai["Name_der_Klinik"]==select]
     k=gklinik[["Sternbewertung","Textuelle_Bewertung","Likes","Datum_der_Bewertung",'sentimentBewertung']]
+    gKlinikInfos=[]
     for i in range(len(k)):
         info=list(k.iloc[i])
         gKlinikInfos.append(info)
@@ -22,6 +23,7 @@ def getGoogleInfos(select):
 def getInfos(select): 
     klinik=reviews.loc[reviews['Name der Klinik']==select]
     k=klinik[["Title","Pro","Kontra","Erfahrungsbericht","Gesamtzufriedenheit","Datum der Bewertung",'sentimentBewertung']]
+    klinikInfos=[]
     for i in range(len(k)):
         info=list(k.iloc[i])
         klinikInfos.append(info)
