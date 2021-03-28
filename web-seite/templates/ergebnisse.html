@@ -56,9 +56,10 @@
         <div class="container ep-height">
             <div class="d-flex justify-content-center align-items-center h-100 flex-column">
 
-                <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST"> 
+                <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST">
 
-                    <select name="klinikNameList" class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
+                    <select name="klinikNameList" class="form-select form-select-lg mb-4"
+                        aria-label=".form-select-lg example">
                         <option selected>Auswählen Sie ein Klinik</option>
                         {% for clinic in clinics %}
                         <option value="{{clinic}}">{{clinic}}</option>
@@ -72,13 +73,18 @@
             </div>
         </div>
     </section>
-    <!-- Name der Klinik -->
-    {% if klinikName %}
-        <p>Klinik name {{klinikName}}</p>
-    {% else %}
-        <p></p>
-    {% endif %}
-   
+    <section>
+        <div class="container">
+            <!-- Name der Klinik -->
+            <h2 class="display-5 text-danger my-5">
+                {% if klinikName %}
+                {{klinikName}}
+                {% endif %}
+            </h2>
+
+        </div>
+    </section>
+
     <!-- Ergebnisse -->
     <section style="min-height: 50vh;">
         <div class="container">
@@ -86,61 +92,91 @@
                 <div class="col-6 py-4">
                     <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="google-tab" data-bs-toggle="tab" data-bs-target="#google"
-                                type="button" role="tab" aria-controls="google" aria-selected="true">Google Maps</button>
+                            <button class="nav-link active" id="google-tab" data-bs-toggle="tab"
+                                data-bs-target="#google" type="button" role="tab" aria-controls="google"
+                                aria-selected="true">Google Maps</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="klinik-tab" data-bs-toggle="tab" data-bs-target="#klinik"
-                                type="button" role="tab" aria-controls="klinik" aria-selected="false">klinikbewertungen.de</button>
+                                type="button" role="tab" aria-controls="klinik"
+                                aria-selected="false">klinikbewertungen.de</button>
                         </li>
-                        
+
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="google" role="tabpanel" aria-labelledby="google-tab">
-                            {% for info in gInfos%}
-                           
-                            <div class="card mb-3 col-12 border-0">
-   
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger text-uppercase">Bewertung</h5>
-                                    <h6 class="card-title">{{info[0]}}</h6>
-                                    
-                                    <p class="card-text">{{info[1]}}</p>
-                                    <div class="d-flex justify-content-between">
-                                        <p class="card-text mb-0"><small class="text-muted"><i class="far fa-thumbs-up mx-2 text-dark"></i>{{info[2]}}</small></p>
-                                        <p class="card-text mb-0"><small class="text-muted">{{info[3]}}</small></p>
-                                    </div>
-                                    <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach TextBlobDE als {{info[4]}} wahrgenommen. </small></p>
-                                    <hr class="text-muted">
-                                </div>
-                            </div>
-                           
-                            {% endfor%}
-                        </div>
-                        <div class="tab-pane fade " id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
-                            {% for info in kInfos %}
-                                <div class="card mb-3 col-12 border-0">
-    
-                                    <div class="card-body">
-                                        <h5 class="card-title text-danger text-uppercase">{{ info[0] }}</h5>
-                                        <h6 class="card-title">Pro :{{ info[1] }}</h6>
-                                        <h6 class="card-title">Kontra: {{ info[2] }}</h6>
-                                        
-                                        <p class="card-text">{{ info[3] }}</p>
-                                        <div class="d-flex justify-content-between">
-                                            <p class="card-text mb-0"><small class="text-muted">{{ info[4] }}</small></p>
-                                            <p class="card-text mb-0"><small class="text-muted">{{ info[5] }}</small></p>
+                            {% if gInfos %}
+                                {% for info in gInfos %}
+                                    <div class="card mb-3 col-12 border-0">
+
+                                        <div class="card-body">
+                                            <h5 class="card-title text-danger text-uppercase">Bewertung-</h5>
+                                            <h6 class="card-title">{{info[0]}}</h6>
+
+                                            <p class="card-text">{{info[1]}}</p>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="card-text mb-0"><small class="text-muted"><i
+                                                            class="far fa-thumbs-up mx-2 text-dark"></i>{{info[2]}}</small></p>
+                                                <p class="card-text mb-0"><small class="text-muted">{{info[3]}}</small></p>
+                                            </div>
+                                            <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach
+                                                    TextBlobDE als {{info[4]}} wahrgenommen. </small></p>
+                                            <hr class="text-muted">
                                         </div>
-                                        <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach TextBlobDE als {{info[6]}} wahrgenommen. </small></p>
-                                        <hr class="text-muted">
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor%}
+                            {% endif %}
                         </div>
-                        
+
+                        <div class="tab-pane fade " id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
+                            {% if kInfos %}
+                                {% for info in kInfos %}
+                                    <div class="card mb-3 col-12 border-0">
+
+                                        <div class="card-body">
+                                            <h5 class="card-title text-danger text-uppercase">{{ info[0] }}</h5>
+                                            <h6 class="card-title">Pro :{{ info[1] }}</h6>
+                                            <h6 class="card-title">Kontra: {{ info[2] }}</h6>
+
+                                            <p class="card-text">{{ info[3] }}</p>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="card-text mb-0"><small class="text-muted">{{ info[4] }}</small></p>
+                                                <p class="card-text mb-0"><small class="text-muted">{{ info[5] }}</small></p>
+                                            </div>
+                                            <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach
+                                                    TextBlobDE als {{info[6]}} wahrgenommen. </small></p>
+                                            <hr class="text-muted">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
                     </div>
                 </div>
-                <div class="col-6"></div>
+                <div class="col-6 py-4">
+                    <div class="container py-4 border-secondary">
+                        {% if gPieChart %}
+                        <h2 class="fs-4 text-danger text-uppercase">Das Prozent der Google Kommentare</h2>
+                        <img src="{{gPieChart}}" alt="Klinik Pie Chart" class="col-12">
+                        {% endif %}
+
+                    </div>
+                    <div class="container py-4">
+                        {% if gWordCloud %}
+                        <h2 class="fs-4 text-danger text-uppercase">Word Cloud für die Google Kommentare</h2>
+                        <img src="{{gWordCloud}}" alt="Klinik WordCloud" class="col-12">
+                        {% endif %}
+
+                    </div>
+                    <div class="container py-4">
+                        {% if kWordCloud %}
+                        <h2 class="fs-4 text-danger text-uppercase">Word Cloud für die Klinicbewertung.de Kommentare</h2>
+                        <img src="{{kWordCloud}}" alt="Klinik WordCloud" class="col-12">
+                        {% endif %}
+
+                    </div>
+                </div>
             </div>
         </div>
     </section>

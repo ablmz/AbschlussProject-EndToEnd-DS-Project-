@@ -27,6 +27,17 @@ def getInfos(select):
         klinikInfos.append(info)
     return klinikInfos
 
+def getGooglePieChart(select):
+    url="../static/img/images/g_piechart/g_p_"+select+".png"
+    return url
+
+def getGoogleWordCloud(select):
+    url="../static/img/images/g_wordcloud/g_w_"+select+".png"
+    return url
+
+def getKlinicWordCloud(select):
+    url="../static/img/images/k_wordcloud/k_w_"+select+".png"
+    return url
 
 @app.route('/')
 
@@ -41,8 +52,11 @@ def ergebnisse():
     select = str(request.form.get("klinikNameList"))
     
     kInfos=getInfos(select)
+    g_p=getGooglePieChart(select)
+    g_w=getGoogleWordCloud(select)
+    k_w=getKlinicWordCloud(select)
     gInfos=getGoogleInfos(select)
-    return render_template("ergebnisse.html", clinics=clinics, klinikName=select, kInfos=kInfos,gInfos=gInfos ) 
+    return render_template("ergebnisse.html", clinics=clinics, klinikName=select, kInfos=kInfos,gInfos=gInfos, gPieChart=g_p, gWordCloud=g_w, kWordCloud=k_w) 
     
 
 
