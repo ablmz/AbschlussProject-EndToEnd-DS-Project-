@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fontawesome Icons CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+
+    <!-- Eigene CSS -->
+    <link href="../static/css/index.css" rel="stylesheet">
+
+    <title>Blitz</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+            <div class="container my-3">
+                <a class="navbar-brand fs-1 fw-bolder font-monospace" href="#">BL<img src="../static/img/blitz.png"
+                        alt="logo" style="width: 60px; height: 80px;">TZ</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Über Uns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Unseres Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Kontakt</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Search -->
+    <section class="dark-bg" id="hero">
+        <div class="container ep-height">
+            <div class="d-flex justify-content-center align-items-center h-100 flex-column">
+
+                <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST"> 
+
+                    <select name="klinikNameList" class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
+                        <option selected>Auswählen Sie ein Klinik</option>
+                        {% for clinic in clinics %}
+                        <option value="{{clinic}}">{{clinic}}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+
+                    <!-- <button class="btn btn-primary">Auswählen</button> -->
+                    <button type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Name der Klinik -->
+   
+    <!-- Ergebnisse -->
+    <div class="class container">
+        <h3>Augenklinik Dr.Hoffmann</h3>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Klinikbewertugen</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Google</button>
+        </li>
+       
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                             
+                <div class="col">
+                  <div class="card">
+                    <img src="../static/images/kliniks/k_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h3 class="card-title">Bewertungen</h3>
+                    <br>
+                    <img style=" width:75px;"  src="../static/images/stars/5.png"> <span> - </span><span>Sehr Zufrieden</span><br><br>
+                    <h6 class="card-title mr-10">Bewertung-1 Bewertung Bewertung Bewertung Bewertung Bewertung Bewertung</h6>                    
+                      
+                    
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>                      
+                      <hr style="border: 1px solid #CCC">
+
+                      <!-- <img style=" width:75px;" src="../static/images/stars/4.png">
+                      <h5 class="card-title">Bewertung-2</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>                      
+                      <hr style="border: 1px solid #CCC">
+
+                      <img style=" width:75px;" src="../static/images/stars/3.png">
+                      <h5 class="card-title">Bewertung-3</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>                      
+                      <hr style="border: 1px solid #CCC"> -->
+
+                      <img style=" width:75px;" src="../static/images/stars/3.png"> <span> - </span><span>Zufrieden</span><br><br>
+                      <h6 class="card-title">Bewertung-4</h6>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>                      
+                      <hr style="border: 1px solid #CCC">
+                      
+                      <img style=" width:75px;" src="../static/images/stars/1.png"> <span> - </span><span>Nicht Zufrieden</span><br><br>
+                      <h6 class="card-title">Bewertung-5</h6>
+                      <p class="card-text" style="display: inline;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel<span id="dots">...   </span>
+                      <span id="more">erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.</span></p>
+
+                      <span style=" text-decoration: underline; text-decoration-color:rgb(20, 20, 20);" onclick="myFunction()" id="myBtn" >Read more</span>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card">
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <div class="card-body">
+                      <h5 class="card-title">Piechchart</h5>
+                      <img src="../static/images/piechart/g_p_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                      
+                      <h5 class="card-title">Cloudword</h5>
+                      <img src="../static/images/wordcloud/g_w_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                    </div>
+                  </div>
+                </div>
+              
+            </div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                             
+                <div class="col">
+                  <div class="card">
+                    <img src="../static/images/kliniks/k_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h3 class="card-title">Bewertungen</h3>
+                      <h5 class="card-title">Bewertung-1</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                      <h5 class="card-title">Bewertung-2</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                      <h5 class="card-title">Bewertung-3</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                      <h5 class="card-title">Bewertung-4</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                      <h5 class="card-title">Bewertung-5</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>                     
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card">
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <div class="card-body">
+                      <h5 class="card-title">Piechchart</h5>
+                      <img src="../static/images/piechart/g_p_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                      
+                      <h5 class="card-title">Cloudword</h5>
+                      <img src="../static/images/wordcloud/g_w_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                    </div>
+                  </div>
+                </div>
+              
+            </div>
+
+        </div>
+       
+      </div>
+      
+
+    </div>
+    <footer class="bg-danger mt-5">
+
+        <table class="d-flex justify-content-center pt-4">
+            <tr>
+                <td class="align-middle"><span><a href="#"><i
+                                class="fab fa-facebook-square fs-1 text-white mx-2"></i></a></span></td>
+                <td class="align-middle"><span><a href="#"><i
+                                class="fab fa-twitter-square fs-1 text-white mx-2"></i></a></span></td>
+                <td class="align-middle"><span><a href="#"><i
+                                class="fab fa-youtube fs-1 text-white mx-2"></i></a></span></td>
+                <td class="align-middle"><span><a href="#"><i
+                                class="fab fa-linkedin fs-1 text-white mx-2"></i></a></span></td>
+                <td class="align-middle"><span><a href="#"><i class="fab fa-google fs-1 text-white mx-2"></i></a></span>
+                </td>
+                <td class="align-middle"><span><a href="#"><i
+                                class="fab fa-instagram fs-1 text-white mx-2"></i></a></span></td>
+                <td class="align-middle"><span><a href="#"><i class="fab fa-github fs-1 text-white mx-2"></i></a></span>
+                </td>
+            </tr>
+        </table>
+        <div class="container-fluid bg-danger text-center py-4 lead text-light">
+            NO &copy; 2021 BLITZ TEAM
+        </div>
+    </footer>
+
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+
+    <script>
+
+      
+
+      function myFunction() {
+        var dots = document.getElementById("dots");
+        var moreText = document.getElementById("more");
+        var btnText = document.getElementById("myBtn");
+      
+        if (dots.style.display === "none") {
+          dots.style.display = "inline";
+          btnText.innerHTML = "Read more";
+          moreText.style.display = "none";
+        } else {
+          dots.style.display = "none";
+          btnText.innerHTML = "Read less";
+          moreText.style.display = "inline";
+        }
+      }
+      /* function removeHandler() {
+        document.getElementById("myBtn").addEventListener('click', myFunction);
+      }*/
+    </script>
+ 
+   
+
+
+</body>
+
+</html>
