@@ -73,7 +73,7 @@
             </div>
         </div>
     </section>
-    <section>
+    <section >
         <div class="container">
             <!-- Name der Klinik -->
             <h2 class="display-5 text-danger my-5">
@@ -86,10 +86,10 @@
     </section>
 
     <!-- Ergebnisse -->
-    <section style="min-height: 50vh;">
-        <div class="container">
-            <div class="row">
-                <div class="col-6 py-4">
+    <section style="min-height: 50vh;" >
+        <div class="container-fluid">
+            <div class="row bg-light">
+                <div class="col-6 py-4 px-5">
                     <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="google-tab" data-bs-toggle="tab"
@@ -101,13 +101,23 @@
                                 type="button" role="tab" aria-controls="klinik"
                                 aria-selected="false">klinikbewertungen.de</button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="gesamt-tab" data-bs-toggle="tab" data-bs-target="#gesamt"
+                                type="button" role="tab" aria-controls="gesamt"
+                                aria-selected="false">Gesamte Bewertung</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="klinik-tab" data-bs-toggle="tab" data-bs-target="#vorhersage"
+                                type="button" role="tab" aria-controls="vorhersage"
+                                aria-selected="false">Vorhersage der Bewertung</button>
+                        </li>
 
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="google" role="tabpanel" aria-labelledby="google-tab">
                             {% if gInfos %}
                                 {% for info in gInfos %}
-                                    <div class="card mb-3 col-12 border-0">
+                                    <div class="card mb-4 col-11 border-0 bdr">
 
                                         <div class="card-body">
                                             <h5 class="card-title text-danger text-uppercase">Bewertung-</h5>
@@ -119,9 +129,10 @@
                                                             class="far fa-thumbs-up mx-2 text-dark"></i>{{info[2]}}</small></p>
                                                 <p class="card-text mb-0"><small class="text-muted">{{info[3]}}</small></p>
                                             </div>
-                                            <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach
-                                                    TextBlobDE als {{info[4]}} wahrgenommen. </small></p>
-                                            <hr class="text-muted">
+                                            <p class="card-text mb-0 bg-warning px-4"><small class="text-dark">Diese Bewertung wurde nach
+                                                    TextBlobDE als {{info[4]}} wahrgenommen. </small>
+                                            </p>
+        
                                         </div>
                                     </div>
                                 {% endfor%}
@@ -131,7 +142,7 @@
                         <div class="tab-pane fade " id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
                             {% if kInfos %}
                                 {% for info in kInfos %}
-                                    <div class="card mb-3 col-12 border-0">
+                                    <div class="card mb-3 col-11 border-0 bdr">
 
                                         <div class="card-body">
                                             <h5 class="card-title text-danger text-uppercase">{{ info[0] }}</h5>
@@ -143,35 +154,71 @@
                                                 <p class="card-text mb-0"><small class="text-muted">{{ info[4] }}</small></p>
                                                 <p class="card-text mb-0"><small class="text-muted">{{ info[5] }}</small></p>
                                             </div>
-                                            <p class="card-text mb-0"><small class="text-muted">Diese Bewertung wurde nach
-                                                    TextBlobDE als {{info[6]}} wahrgenommen. </small></p>
-                                            <hr class="text-muted">
+                                            <p class="card-text mb-0 bg-success px-2"><small class="text-white">Diese Bewertung wurde nach
+                                                    TextBlobDE als {{info[6]}} wahrgenommen. </small>
+                                            </p>
                                         </div>
                                     </div>
                                 {% endfor %}
                             {% endif %}
                         </div>
 
+                        <div class="tab-pane fade " id="gesamt" role="tabpanel" aria-labelledby="gesamt-tab">
+                            <div class="bdr p-3 mb-4">
+                                <img src="../static/img/Images/g_sentiment_gesamt.jpeg"  class="col-12" alt="gesamte Bewertung">
+                            </div>
+                            <div class="bdr p-3">
+                                <img src="../static/img/Images/k_sentiment_gesamt.jpeg" class="col-12" alt="gesamte Bewertung">
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade " id="vorhersage" role="tabpanel" aria-labelledby="vorhersage-tab">
+                            <div class="col-lg-8 text-center ">
+                                  
+                                <form class="row mx-auto">
+                                                                        
+                                  <h2 class="fs-4 text-danger my-2 text-center">Bitte geben Sie einen Text ein...</h2>
+                      
+                                  <div class="col-12 py-5">
+                                    <div class="input-group">
+                                      <div class="input-group-text rounded-0 bg-danger border-danger text-white">
+                                      </div>
+                                      <textarea class="form-control rounded-0 border-danger text-white bg-transparent"
+                                        placeholder="Ihre text werde sentiment analyse *" rows="6" required></textarea>
+                                    </div>
+                                  </div>
+                      
+                                  <div class="d-grid">
+                                    <button class="btn btn-outline-danger rounded-0 text-uppercase" type="submit">
+                                      SEND MESSAGE
+                                    </button>
+                                  </div>
+                      
+                                </form>
+                              </div>
+                        </div>
+
+
                     </div>
                 </div>
-                <div class="col-6 py-4">
-                    <div class="container py-4 border-secondary">
+                <div class="col-6 py-4 px-5">
+                    <div class="container py-4 bdr">
                         {% if gPieChart %}
-                        <h2 class="fs-4 text-danger text-uppercase">Das Prozent der Google Kommentare</h2>
+                        <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Das Prozent der Google Kommentare</h2>
                         <img src="{{gPieChart}}" alt="Klinik Pie Chart" class="col-12">
                         {% endif %}
 
                     </div>
-                    <div class="container py-4">
+                    <div class="container py-4 bdr">
                         {% if gWordCloud %}
-                        <h2 class="fs-4 text-danger text-uppercase">Word Cloud für die Google Kommentare</h2>
+                        <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Word Cloud für die Google Kommentare</h2>
                         <img src="{{gWordCloud}}" alt="Klinik WordCloud" class="col-12">
                         {% endif %}
 
                     </div>
-                    <div class="container py-4">
+                    <div class="container py-4 bdr">
                         {% if kWordCloud %}
-                        <h2 class="fs-4 text-danger text-uppercase">Word Cloud für die Klinicbewertung.de Kommentare</h2>
+                        <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Word Cloud für die Klinicbewertung.de Kommentare</h2>
                         <img src="{{kWordCloud}}" alt="Klinik WordCloud" class="col-12">
                         {% endif %}
 
