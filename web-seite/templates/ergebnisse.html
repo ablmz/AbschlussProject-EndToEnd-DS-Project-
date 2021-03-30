@@ -129,7 +129,7 @@
                                                             class="far fa-thumbs-up mx-2 text-dark"></i>{{info[2]}}</small></p>
                                                 <p class="card-text mb-0"><small class="text-muted">{{info[3]}}</small></p>
                                             </div>
-                                            <p class="card-text mb-0 bg-warning px-4"><small class="text-dark">Diese Bewertung wurde nach
+                                            <p class="card-text mb-0 bg-success px-4"><small class="text-white">Diese Bewertung wurde nach
                                                     TextBlobDE als {{info[4]}} wahrgenommen. </small>
                                             </p>
         
@@ -201,22 +201,22 @@
 
                     </div>
                 </div>
-                <div class="col-6 py-4 px-5">
-                    <div class="container py-4 bdr">
+                <div class="col-6 py-4 px-5 ">
+                    <div class="container py-4 bdr my-3">
                         {% if gPieChart %}
                         <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Das Prozent der Google Kommentare</h2>
                         <img src="{{gPieChart}}" alt="Klinik Pie Chart" class="col-12">
                         {% endif %}
 
                     </div>
-                    <div class="container py-4 bdr">
+                    <div class="container py-4 bdr my-3">
                         {% if gWordCloud %}
                         <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Word Cloud für die Google Kommentare</h2>
                         <img src="{{gWordCloud}}" alt="Klinik WordCloud" class="col-12">
                         {% endif %}
 
                     </div>
-                    <div class="container py-4 bdr">
+                    <div class="container py-4 bdr my-3">
                         {% if kWordCloud %}
                         <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Word Cloud für die Klinicbewertung.de Kommentare</h2>
                         <img src="{{kWordCloud}}" alt="Klinik WordCloud" class="col-12">
