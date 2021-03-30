@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if image != null %}
+
+<img src="{{ url_for('static', filename='images/piechart/g_p_'+ image +'.png') }}">
+
+{% endif %}
+{% endblock %}
+
+<!-- href="{{ url_for('static', filename='css/index.css') }}"> -->

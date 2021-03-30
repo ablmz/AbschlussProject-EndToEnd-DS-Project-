@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Vorhersage</h3>
+<div class="class container">
+    <form class="row mx-auto">
+                                                                        
+        <h2 class="fs-4 text-danger my-2 text-center">Bitte geben Sie einen Text ein...</h2>
+
+        <div class="col-12 py-5">
+          <div class="input-group">
+            <div class="input-group-text rounded-0 bg-danger border-danger text-white">
+            </div>
+            <textarea class="form-control rounded-0 border-danger text-white bg-transparent"
+              placeholder="Ihre text werde sentiment analyse *" name="comment" rows="6" required></textarea>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button class="btn btn-outline-danger rounded-0 text-uppercase" type="submit">
+            SEND MESSAGE
+          </button>
+        </div>
+        <!-- <form method="get" id="testformid">
+            <input type="submit" />
+        </form> 
+        <textarea form ="testformid" name="taname" id="taid" cols="35" wrap="soft"></textarea>
+
+      </form> -->
+      <br><br>
+    {{pred}}
+
+</div>
+{% endblock %}

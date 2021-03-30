@@ -12,3 +12,7 @@
 .paddingSection{
     padding: 100px 0;
 }
+
+table.dataTable td {
+    word-break: break-word;
+  }

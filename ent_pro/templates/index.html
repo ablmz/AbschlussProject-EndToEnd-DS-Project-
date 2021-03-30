@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Über Uns  flex-column-->
+<section id="uber_uns" class="paddingSection">
+
+    <div class="container">
+      <h2 class="display-5 text-danger mb-5">WHO WE ARE</h2>
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-8 bg-light">
+          <div class="d-flex h-100 flex-column justify-content-center">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 p-0">
+          <img class="img-fluid" src="../static/img/company.jpg">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-8 bg-light">
+          <div class="d-flex h-100 flex-column justify-content-center">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 order-first p-0">
+          <img class="img-fluid" src="../static/img/company2.jpg">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- unsere Team-->
+  <section id="team" class="paddingSection">
+    <div class="container">
+      <h2 class="display-5 text-danger mb-5">THE TEAM</h2>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 col-lg-3 p-0">
+          <div class="d-grid bg-danger py-5">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger rounded-0 py-5" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">
+              <span class="lead">DATA SCIENTIST</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3  p-0">
+          <div class="d-grid bg-warning py-5">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-warning rounded-0 py-5" data-bs-toggle="modal"
+              data-bs-target="#exampleModal2">
+              <span class="lead">DATA SCIENTIST</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3  p-0">
+          <div class="d-grid bg-success py-5">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success rounded-0 py-5" data-bs-toggle="modal"
+              data-bs-target="#exampleModal3">
+              <span class="lead">WEB ENTWICKLER</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3  p-0">
+          <div class="d-grid bg-info py-5">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-info rounded-0 py-5" data-bs-toggle="modal"
+              data-bs-target="#exampleModal4">
+              <span class="lead">WEB ENTWICKLER</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 1 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <div class="modal-body">
+            <img src="../static/img/person1.jpg" class="img-fluid">
+            <h5 class="lead text-danger mt-2">ISMAIL</h5>
+            <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
+              Then, use the normal grid system classes as you would anywhere else.</p>
+            <ul class="list-unstyled">
+              <li>Lorem ipsum dolor sit amet</li>
+              <li>Lorem ipsum dolor sit amet</li>
+              <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+              </ul>
+              <li>Lorem ipsum dolor sit amet</li>
+            </ul>
+
+            <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-warning rounded-0">LINKEDIN</button>
+              <button type="button" class="btn btn-success rounded-0">FACEBOOK</button>
+              <button type="button" class="btn btn-info rounded-0">TWITTER</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <div class="modal-body">
+            <img src="../static/img/person2.jpg" class="img-fluid">
+            <h5 class="lead text-danger mt-2">ADEM</h5>
+            <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
+              Then, use the normal grid system classes as you would anywhere else.</p>
+            <ul class="list-unstyled">
+              <li>Lorem ipsum dolor sit amet</li>
+              <li>Lorem ipsum dolor sit amet</li>
+              <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+              </ul>
+              <li>Lorem ipsum dolor sit amet</li>
+            </ul>
+
+            <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-warning rounded-0">LINKEDIN</button>
+              <button type="button" class="btn btn-success rounded-0">FACEBOOK</button>
+              <button type="button" class="btn btn-info rounded-0">TWITTER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal 3 -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <div class="modal-body">
+            <img src="../static/img/person3.jpg" class="img-fluid">
+            <h5 class="lead text-danger mt-2">ASIM</h5>
+            <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
+              Then, use the normal grid system classes as you would anywhere else.</p>
+            <ul class="list-unstyled">
+              <li>Lorem ipsum dolor sit amet</li>
+              <li>Lorem ipsum dolor sit amet</li>
+              <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+              </ul>
+              <li>Lorem ipsum dolor sit amet</li>
+            </ul>
+
+            <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-warning rounded-0">LINKEDIN</button>
+              <button type="button" class="btn btn-success rounded-0">FACEBOOK</button>
+              <button type="button" class="btn btn-info rounded-0">TWITTER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal 4 -->
+    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <div class="modal-body">
+            <img src="../static/img/person4.jpg" class="img-fluid">
+            <h5 class="lead text-danger mt-2">MERIEM</h5>
+            <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
+              Then, use the normal grid system classes as you would anywhere else.</p>
+            <ul class="list-unstyled">
+              <li>Lorem ipsum dolor sit amet</li>
+              <li>Lorem ipsum dolor sit amet</li>
+              <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+              </ul>
+              <li>Lorem ipsum dolor sit amet</li>
+            </ul>
+
+            <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-warning rounded-0">LINKEDIN</button>
+              <button type="button" class="btn btn-success rounded-0">FACEBOOK</button>
+              <button type="button" class="btn btn-info rounded-0">TWITTER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="contact" class="paddingSection dark-bg">
+    <div class="container">
+
+
+      <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <h2 class="display-5 text-danger mb-5">SCHREIB UNS</h2>
+          <form class="row">
+
+            <div class="col-6">
+              <div class="input-group">
+                <div class="input-group-text rounded-0 bg-danger border-danger text-white">
+                  <i class="fas fa-user"></i>
+                </div>
+                <input type="text" class="form-control rounded-0 border-danger text-white bg-transparent"
+                  placeholder="NAME *" required>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="input-group">
+                <div class="input-group-text rounded-0 bg-danger border-danger text-white">
+                  <i class="fas fa-at"></i>
+                </div>
+                <input type="email" class="form-control rounded-0 border-danger text-white bg-transparent"
+                  placeholder="EMAIL *" required>
+              </div>
+            </div>
+
+            <div class="col-12 py-5">
+              <div class="input-group">
+                <div class="input-group-text rounded-0 bg-danger border-danger text-white">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <textarea class="form-control rounded-0 border-danger text-white bg-transparent"
+                  placeholder="Ihre ausführliche Mitteilung... *" rows="6" required></textarea>
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button class="btn btn-outline-danger rounded-0 text-uppercase" type="submit">
+                SEND MESSAGE
+              </button>
+            </div>
+
+          </form>
+        </div>
+        <div class="col-md-12 col-lg-6">
+          <table class="table border-0 ">
+            <tbody>
+              <tr>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.8468462842347!2d9.762973015951541!3d52.35506295619161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b00b3b79e2fd8d%3A0xc283c733aab9c1f7!2sHochschule%20Hannover!5e0!3m2!1str!2sde!4v1616413407451!5m2!1str!2sde"
+                  width="450" height="345" style="border:0;" allowfullscreen="" loading="lazy" class="mb-4"></iframe>
+              </tr>
+              <tr>
+                <td colspan="7" class="align-middle">
+                  <span class="text-light">Bismarckstraße 2, 30173 Hannover</span>
+                </td>
+                <th scope="row" class="text-danger lead text-center">
+                  <i class="fas fa-map-marker-alt" style="font-size: 2rem;"></i>
+                </th>
+              </tr>
+              <tr>
+                <td colspan="7" class="align-middle">
+                  <span class="text-light">+90 555 - 444 - 333 - 222 - 111</span>
+                </td>
+                <th scope="row" class="text-danger lead text-center">
+                  <i class="fas fa-phone" style="font-size: 2rem;"></i>
+                </th>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
