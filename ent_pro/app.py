@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, url_for, redirect
 import pandas as pd
 from slugify import slugify
+import pickle
 
 app = Flask(__name__)
 
-model = pickle.load(open("model.pkl","rb"))
+
 
 k_reviews = pd.read_csv("clinical_data_lowersaxony.csv")
 g_reviews = pd.read_csv("clinical_data_lowersaxony_google.csv")
@@ -55,7 +56,10 @@ def ergebnisse():
     
 @app.route('vorhersage', methods=["GET","POST"])
 def vorhersage():
-     if request.method == 'POST':
+    model = pickle.load(open("model.pkl","rb"))
+
+    if request.method == 'POST':
+
          
         comment = str(request.form.get("comment"))
         
