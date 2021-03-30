@@ -61,10 +61,9 @@ def vorhersage():
         
         prediction = model.predict_proba(comment)
 
-        output=prediction[0]
+        output=str(prediction)
 
-
-        return render_template('vorhersage.html',pred='Your probability of diabetes is % {}'.format(output))
+        return render_template('vorhersage.html',pred=output)
 
          
 
