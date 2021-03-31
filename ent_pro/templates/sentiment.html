@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <!-- Head image -->
+      
+ <section class="dark-bg" id="hero">
+    <div class="container ep-height">
+      <div class="d-flex justify-content-center align-items-center h-100 flex-column">  
+       
+      </div>
+    </div>
+  </section>
+  
+<h3>Sentiment analyse</h3>
+<img src="{{ url_for('static', filename='images/sentiment/A_g_senti_Graph.png') }}" class="card-img-top" >
+<br><br>
+<img src="{{ url_for('static', filename='images/sentiment/A_k_senti_Graph.png') }}" class="card-img-top" >
+<br><br>
+<img src="{{ url_for('static', filename='images/sentiment/A_kg_senti_Graph.png') }}" class="card-img-top" >
+
+
+{% endblock %}

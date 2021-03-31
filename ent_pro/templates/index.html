@@ -1,6 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
+ <!-- Search -->
+      
+ <section class="dark-bg" id="hero">
+  <div class="container hp-height">
+    <div class="d-flex justify-content-center align-items-center h-100 flex-column">
+
+      <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST"> 
+
+        <select name="klinikNameList" class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
+          {%if klinikName %}
+          <option selected>{{klinikName}}</option>
+          {% elif message %}
+          <option selected>{{message}}</option>
+          {% else %}
+          <option selected>Auswählen Sie ein Klinik</option>
+          {% endif %}                
+          {% for clinic in clinics %}
+            <option value="{{clinic}}">{{clinic}}</option> 
+          {% endfor %}        
+        </select>
+        <br>
+        
+        <!-- <button class="btn btn-primary">Auswählen</button> -->
+
+        <button type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<div class="class container">
 <!-- Über Uns  flex-column-->
 <section id="uber_uns" class="paddingSection">
 
@@ -95,7 +127,7 @@
 
           <div class="modal-body">
             <img src="../static/img/person1.jpg" class="img-fluid">
-            <h5 class="lead text-danger mt-2">ISMAIL</h5>
+            <h5 class="lead text-danger mt-2">ASIM - <em>Data Analyst</em></h5>
             <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
               Then, use the normal grid system classes as you would anywhere else.</p>
             <ul class="list-unstyled">
@@ -128,7 +160,7 @@
 
           <div class="modal-body">
             <img src="../static/img/person2.jpg" class="img-fluid">
-            <h5 class="lead text-danger mt-2">ADEM</h5>
+            <h5 class="lead text-danger mt-2">ADEM - <em>Data Analyst</em></h5>
             <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
               Then, use the normal grid system classes as you would anywhere else.</p>
             <ul class="list-unstyled">
@@ -158,7 +190,7 @@
 
           <div class="modal-body">
             <img src="../static/img/person3.jpg" class="img-fluid">
-            <h5 class="lead text-danger mt-2">ASIM</h5>
+            <h5 class="lead text-danger mt-2">ISMAIL - <em>Webentwickler</em></h5>
             <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
               Then, use the normal grid system classes as you would anywhere else.</p>
             <ul class="list-unstyled">
@@ -188,7 +220,7 @@
 
           <div class="modal-body">
             <img src="../static/img/person4.jpg" class="img-fluid">
-            <h5 class="lead text-danger mt-2">MERIEM</h5>
+            <h5 class="lead text-danger mt-2">MERIEM - <em>Webentwickler</em></h5>
             <p>Utilize the Bootstrap grid system within a modal by nesting .container-fluid within the .modal-body.
               Then, use the normal grid system classes as you would anywhere else.</p>
             <ul class="list-unstyled">

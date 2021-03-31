@@ -2,6 +2,7 @@ import scrapy
 from  scrapy import Request
 from scrapy.crawler import CrawlerProcess
 import csv
+import pandas as pd
 
 class TestSpider(scrapy.Spider):
     name = 'test'
@@ -11,7 +12,7 @@ class TestSpider(scrapy.Spider):
         
         'FEED_EXPORT_ENCODING':'UTF-8',
         'FEED_FORMAT':'csv',
-        'FEED_URI':'output.csv'
+        'FEED_URI':'output_klinik.csv'
     }
 
     #output for json
@@ -19,32 +20,23 @@ class TestSpider(scrapy.Spider):
     #   'FEED_EXPORT_ENCODING':'UTF-8',
     #   'FEED_FORMAT':'json',
     #   'FEED_URI':'output.json'}
-    
-    def start_requests(self):
-        urls = [
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-augenklinik-dr-hoffmann-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-marienstift-braunschweig','https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-kliniken-herzogin-elisabeth-braunschweig',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-goettingen',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-tiefenbrunn-rosdorf',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-friederikenstift-hannover',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-annastift-hannover',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-drk-clementinenhaus-hannover',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-sophien-klinik-hannover',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-grossburgwedel',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-lehrte',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-lindenbrunn-coppenbruegge',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-hameln',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-kreis-und-stadtkrankenhaus-alfeld',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-hildesheim',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-stadtkrankenhaus-cuxhaven',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-bremervoerde',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-klinik-fallingbostel',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-klinikum-emden',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-ludmillenstift-meppen',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-marienhospital-papenburg',
-            'https://www.klinikbewertungen.de/klinik-forum/erfahrung-mit-krankenhaus-osterholz-scharmbeck']
 
-        for url in urls:
+    #df = pd.read_excel('Klinikliste-tmz.xlsx', encoding="UTF-8")
+
+    df = pd.read_excel(r'D:\0-REFUGEEKS-ALLES\16.Project\Projekt_datei\Final-Project\bewertungen\Klinikliste-tmz.xlsx')
+    urls = df["Link Klinikbewertungen"].tolist()
+    ix = -1
+    clinics = df["Klinikname"].tolist()
+    # print(urls)
+    # print(clinics)
+    def start_requests(self):
+        #urls = self.df["Link Klinikbewertungen"]
+
+        for url in self.urls:            
+            self.ix = self.ix + 1
             yield Request(url+'/bewertungen?allbew#more', callback=self.parse)
+            
+            
 
 
     def parse(self, response):
@@ -56,9 +48,9 @@ class TestSpider(scrapy.Spider):
 
         #Fixed Values -one output
         bewertungen = response.xpath("//*[@class='block']/header/h1/text()").get()
-        klinik_name = response.xpath("//header/h1/text()").get()
+        #klinik_name = response.xpath("//header/h1/text()").get()
 
-        clinics = ['Augenklinik Dr.Hoffmann','Krankenhaus Marienstift Braunschweig','Herzogin Elisabeth Hospital Braunschweig','Asklepios Fachklinikum Göttingen','Asklepios Fachklinikum Tiefenbrunn','Friederikenstift Hannover','Annastift Hannover','Clementinenhaus','Sophienklinik Hannover','KRH Klinikum Großburgwedel','KRH Klinikum Lehrte','Krankenhaus Lindenbrunn','Krankenhaus Hameln','AMEOS Klinikum Alfeld','Helios Klinikum Hildesheim','Helios Klinikum Cuxhaven','OsteMed Klinik Bremervörde','Klinik Fallingborstel','Klinikum Emden','Krankenhaus Ludmillenstift','Marienhospital Papenburg','Kreiskrankenhaus Osterholz']
+        
 
         # Mehr values
         all_reviews = response.xpath("//div[@class='list ratinglist']/article")
@@ -157,11 +149,9 @@ class TestSpider(scrapy.Spider):
                     daumen = 'Daumen hoch'
                 else:
                     daumen = 'Daumen runter'
-                       
-
-         
+           
             yield{
-                'Name der Klinik':klinik_name,
+                'Name der Klinik':self.clinics[self.ix],
                 'Message':message,
                 'bewertungen':bewertungen.strip(),
                 'Title':review_title,

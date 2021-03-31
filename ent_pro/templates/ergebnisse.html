@@ -1,6 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Search -->
+      
+<section class="dark-bg" id="hero">
+  <div class="container ep-height">
+    <div class="d-flex justify-content-center align-items-center h-100 flex-column">
+
+      <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST"> 
+
+        <select name="klinikNameList" class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
+          {%if klinikName %}
+          <option selected>{{klinikName}}</option>
+          {% elif message %}
+          <option selected>{{message}}</option>
+          {% else %}
+          <option selected>Auswählen Sie ein Klinik</option>
+          {% endif %}                
+          {% for clinic in clinics %}
+            <option value="{{clinic}}">{{clinic}}</option> 
+          {% endfor %}        
+        </select>
+        <br>
+        
+        <!-- <button class="btn btn-primary">Auswählen</button> -->
+
+        <button type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
+      </form>
+    </div>
+  </div>
+</section>
  <!-- Ergebnisse -->
  <div class="class container">
     
@@ -11,12 +40,7 @@
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="google-tab" data-bs-toggle="tab" data-bs-target="#google" type="button" role="tab" aria-controls="google" aria-selected="false">Google</button>
     </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="sentiment-tab" data-bs-toggle="tab" data-bs-target="#sentiment" type="button" role="tab" aria-controls="sentiment" aria-selected="false">Sentiment Analyse</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="vorhersage-tab" data-bs-toggle="tab" data-bs-target="#vorhersage" type="button" role="tab" aria-controls="vorhersage" aria-selected="false">Vorhersage</button>
-    </li>
+   
    
   </ul>
   <div class="tab-content mt-3" id="myTabContent">
@@ -46,12 +70,7 @@
                                     <h5 class="card-title">{{ k_info[0] }}</h5>                                   
                                     <hr style="border: 1px solid #CCC">
                                   
-                                    <p class="card-text" style="display: inline;">{{k_info[3][:200]}}
-                                      <span id="dots">...   </span>
-                                      <span id="more">{{k_info[3][201:]}}</span>
-                                    </p>
-                                    <span style=" text-decoration: underline; text-decoration-color:rgb(20, 20, 20);" onclick="myFunction()" id="myBtn" >Read more</span>
-                                    <!-- <p  class="card-text">{{k_info[3][:10]}}</p> -->
+                                    <p  class="card-text">{{k_info[3]}}</p>
                                    
                                     <p class="card-text mb-0"><small class="text-muted">{{ k_info[4] }}</small></p>
                                     <p class="card-text mb-0"><small class="text-muted">{{ k_info[5] }}</small></p>
@@ -75,10 +94,10 @@
                 <!-- <img src="..." class="card-img-top" alt="..."> -->
                 <div class="card-body">
                   <h5 class="card-title">Piechchart</h5>
-                  <img src="../static/images/piechart/g_p_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                  <img src="{{ url_for('static', filename='images/piechart/k_p_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
                   
                   <h5 class="card-title">Cloudword</h5>
-                  <img style="width: 800px;" src="../static/images/wordcloud/g_w_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                  <img src="{{ url_for('static', filename='images/wordcloud/k_w_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
                 </div>
               </div>
             </div>
@@ -96,37 +115,31 @@
               <h3 class="card-title">Google Map</h3>
               <br> 
             <!-- DataTable begin -->
-            <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+            <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
               <thead>
                   <tr>
                       <th>Kommanter</th>
                   </tr>
               </thead>
               <tbody>
-                  {% for k_info in k_Infos %}
+                  {% for g_info in g_Infos %}
                   <tr>
                       <td style="word-break: break-word; vertical-align: top;">
                         
-                                  <h5 class="card-title">{{ k_info[0] }}</h5>                                   
+                                  <h5 class="card-title">{{ g_info[0] }}</h5>                                   
                                   <hr style="border: 1px solid #CCC">
                                 
-                                  <p class="card-text" style="display: inline;">{{k_info[3][:200]}}
-                                    <span id="dots">...   </span>
-                                    <span id="more">{{k_info[3][201:]}}</span>
-                                  </p>
-                                  <span style=" text-decoration: underline; text-decoration-color:rgb(20, 20, 20);" onclick="myFunction()" id="myBtn" >Read more</span>
-                                  <!-- <p  class="card-text">{{k_info[3][:10]}}</p> -->
+                                  <p  class="card-text">{{g_info[3]}}</p>
                                  
-                                  <p class="card-text mb-0"><small class="text-muted">{{ k_info[4] }}</small></p>
-                                  <p class="card-text mb-0"><small class="text-muted">{{ k_info[5] }}</small></p>
+                                  <p class="card-text mb-0"><small class="text-muted">{{ g_info[4] }}</small></p>
+                                  <p class="card-text mb-0"><small class="text-muted">{{ g_info[5] }}</small></p>
                                  
                         
                       </td>                                      
                   </tr>
                   {% endfor %}
               </tbody>
-          </table>
-
+          </table>          
 
             <!-- DataTable end -->
 
@@ -139,10 +152,10 @@
               <!-- <img src="..." class="card-img-top" alt="..."> -->
               <div class="card-body">
                 <h5 class="card-title">Piechchart</h5>
-                <img src="../static/images/piechart/g_p_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
-                
-                <h5 class="card-title">Cloudword</h5>
-                <img style="width: 800px;" src="../static/images/wordcloud/g_w_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
+                <img src="{{ url_for('static', filename='images/piechart/g_p_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
+                  
+                  <h5 class="card-title">Cloudword</h5>
+                  <img src="{{ url_for('static', filename='images/wordcloud/g_w_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
               </div>
             </div>
           </div>
@@ -151,47 +164,7 @@
         </div>
 
     </div>
-    <div class="tab-pane fade" id="sentiment" role="tabpanel" aria-labelledby="sentiment-tab">
-      <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
-                      
-        <div class="col">
-          <div class="card">                
-            <img src="{{ url_for('static', filename='images/kliniks/k_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
-            <div class="card-body">
-            <h3 class="card-title">Sentiment</h3>
-            <br>          
-
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <!-- <img src="..." class="card-img-top" alt="..."> -->
-            <div class="card-body">
-              <h5 class="card-title">Piechchart</h5>
-              <img src="../static/images/piechart/g_p_Asklepios Fachklinikum Göttingen.png" class="card-img-top" alt="...">
-             
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="vorhersage" role="tabpanel" aria-labelledby="vorhersage-tab">
-    <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
-                     
-        <div class="col">
-          <div class="card">
-            <img src="{{ url_for('static', filename='images/kliniks/k_'+ slug_name +'.png') }}" 
-            <div class="card-body">
-            <h3 class="card-title">Vorhersage</h3>
-            <form id="search" action="/vorhersage" class="col-6" style="text-align:center;" method="POST">
-              <button type="submit" name="ok" class="btn btn-primary">Sent</button>
-            </form>
-
-            </div>
-          </div>
-    </div>
-    </div>
+   
   </div>
    
   </div>

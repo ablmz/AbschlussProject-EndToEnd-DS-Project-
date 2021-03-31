@@ -21,10 +21,11 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-danger ">
           <div class="container my-3">
-            <a class="navbar-brand fs-1 fw-bolder font-monospace" href="#">BL<img src="{{ url_for('static', filename='img/blitz.png') }}"alt="logo"
-                style="width: 60px; height: 80px;">TZ</a>
+            <a class="navbar-brand fs-1 fw-bolder font-monospace" href="#"><img src="{{ url_for('static', filename='img/logo10.png') }}"alt="logo"
+                style="width: 80px; height: 90px; display:inline"></a>
+                <h4 style="color: white;"><em>Schnelleste und Beste Qualität</em></h4>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -32,17 +33,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Über Uns</a>
+                  <a class="nav-link" href="/ergebnisse">Kliniken</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Unseres Team</a>
+                  <a class="nav-link" href="/sentiment">Sentiment Analyse</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Kontakt</a>
+                  <a class="nav-link" href="/vorhersage">Vorhersage</a>
                 </li>
+               
     
               </ul>
     
@@ -50,28 +52,7 @@
           </div>
         </nav>
       </header>
-      <!-- Search -->
-      <section class="dark-bg" id="hero">
-        <div class="container hp-height">
-          <div class="d-flex justify-content-center align-items-center h-100 flex-column">
-    
-            <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST"> 
-    
-              <select name="klinikNameList" class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
-                <option selected>Auswählen Sie ein Klinik</option>
-                {% for clinic in clinics %}
-                  <option value="{{clinic}}">{{clinic}}</option> 
-                {% endfor %}        
-              </select>
-              <br>
-              
-              <!-- <button class="btn btn-primary">Auswählen</button> -->
-              <button type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
-            </form>
-          </div>
-        </div>
-      </section>
-    <div class="class container">
+     
         {% block content %}
     
         <!-- Veränderlick Teilen -->
@@ -111,7 +92,16 @@
     <script>
     $(document).ready(function() {
         $('#example').DataTable({
-          "lengthMenu": [ 3, 5, 10, 20, 50 ]
+          "lengthMenu": [ 3, 5, 10, 20, 50 ],
+          'charset': 'UTF-8'
+        } );
+    } );
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('#example2').DataTable({
+          "lengthMenu": [ 3, 5, 10, 20, 50 ],
+           'charset': 'UTF-8'
         } );
     } );
     </script>

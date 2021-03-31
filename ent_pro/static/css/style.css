@@ -1,5 +1,11 @@
-.dark-bg {
+.kontakt-bg {
     background-image: linear-gradient(rgba(0,0,0, .8), rgba(0,0,0, .4)), url('../img/himmel.jpg');
+    background-size: cover;
+    background-position: center center;
+    
+}
+.dark-bg {
+    background-image: url('../img/bg-1.jpg');
     background-size: cover;
     background-position: center center;
     
@@ -14,5 +20,15 @@
 
 .paddingSection{
     padding: 100px 0;
+}
+.bdr{
+    border-radius: 20px;
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+            box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+}
+.nav-item>a:hover{
+    background-color:#fff;
+    color:#DC3545 !important;
 }
 #more {display: none;}

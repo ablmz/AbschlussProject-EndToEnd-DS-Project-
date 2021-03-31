@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+ <!-- Head image -->
+      
+ <section class="dark-bg" id="hero">
+  <div class="container ep-height">
+    <div class="d-flex justify-content-center align-items-center h-100 flex-column">  
+     
+    </div>
+  </div>
+</section>
 <h3>Vorhersage</h3>
 <div class="class container">
-    <form class="row mx-auto">
+    <form class="row mx-auto" method="POST" id="vorhersage">
                                                                         
         <h2 class="fs-4 text-danger my-2 text-center">Bitte geben Sie einen Text ein...</h2>
 
@@ -11,7 +20,7 @@
           <div class="input-group">
             <div class="input-group-text rounded-0 bg-danger border-danger text-white">
             </div>
-            <textarea class="form-control rounded-0 border-danger text-white bg-transparent"
+            <textarea type="text" form="vorhersage" class="form-control rounded-0 border-danger text-black bg-transparent"
               placeholder="Ihre text werde sentiment analyse *" name="comment" rows="6" required></textarea>
           </div>
         </div>
@@ -21,12 +30,9 @@
             SEND MESSAGE
           </button>
         </div>
-        <!-- <form method="get" id="testformid">
-            <input type="submit" />
-        </form> 
-        <textarea form ="testformid" name="taname" id="taid" cols="35" wrap="soft"></textarea>
-
-      </form> -->
+      </form>
+        <br><br>
+      
       <br><br>
     {{pred}}
 
