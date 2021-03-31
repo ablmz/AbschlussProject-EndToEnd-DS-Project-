@@ -46,20 +46,25 @@
   <div class="tab-content mt-3" id="myTabContent">
     <div class="tab-pane fade show active" id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
       <h4>{{klinikName}}</h4>  
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+        <!-- <div class="row row-cols-1 row-cols-md-2 g-4 mt-2"> -->
+          <div class="row bg-white">
                   
-            <div class="col">
-              <div class="card"> 
-                            
-                <img src="{{ url_for('static', filename='images/kliniks/k_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
+            <div class="col-6 py-4 px-3">
+              <div class="container py-3 bdr my-3">
+                <img src="{{ url_for('static', filename='images/kliniks/k_'+ slug_name +'.png') }}" class="col-12" alt="{{klinikName}}">
+              </div> 
+
+              <div class="card mb-6 col-12 border-0 bdr"> 
+                        
+               
                 <div class="card-body">
-                <h3 class="card-title">Kilinikbewertungen.de</h3>
+                
                 <br> 
               <!-- DataTable begin -->
               <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Kommanter</th>
+                        <th><h6 class="card-title">Kilinikbewertungen.de</h6></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,12 +73,15 @@
                         <td style="word-break: break-word; vertical-align: top;">
                           
                                     <h5 class="card-title">{{ k_info[0] }}</h5>                                   
-                                    <hr style="border: 1px solid #CCC">
+                                    <!-- <hr style="border: 1px solid #CCC"> -->
                                   
                                     <p  class="card-text">{{k_info[3]}}</p>
                                    
                                     <p class="card-text mb-0"><small class="text-muted">{{ k_info[4] }}</small></p>
-                                    <p class="card-text mb-0"><small class="text-muted">{{ k_info[5] }}</small></p>
+                                    <!-- <p class="card-text mb-0"><small class="text-muted">{{ k_info[5] }}</small></p> -->
+                                    <p class="card-text mb-0 px-4"><small><em>Diese Bewertung wurde nach
+                                      TextBlobDE als {{k_info[5]}} wahrgenommen. </em></small>
+                              </p>
                                    
                           
                         </td>                                      
@@ -89,19 +97,18 @@
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="card">
+            <div class="col-6 py-4 px-3 ">
+              <div class="container py-5 bdr my-3">
                 <!-- <img src="..." class="card-img-top" alt="..."> -->
-                <div class="card-body">
-                  <h5 class="card-title">Piechchart</h5>
-                  <img src="{{ url_for('static', filename='images/piechart/k_p_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
-                  
-                  <h5 class="card-title">Cloudword</h5>
-                  <img src="{{ url_for('static', filename='images/wordcloud/k_w_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
-                </div>
+                
+                  <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Das Prozent der Klinikbewertung.de Kommentare</h2>
+                  <img src="{{ url_for('static', filename='images/piechart/k_p_'+ slug_name +'.png') }}" class="col-12" alt="{{klinikName}}">
               </div>
-            </div>
-          
+              <div class="container py-4 bdr my-3">
+              <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Word Cloud für die Klinikbewertung.de Kommentare</h2>
+                  <img src="{{ url_for('static', filename='images/wordcloud/k_w_'+ slug_name +'.png') }}" class="col-12" alt="{{klinikName}}">
+              </div> 
+            </div> 
         </div>
     </div>
     <div class="tab-pane fade" id="google" role="tabpanel" aria-labelledby="google-tab">
@@ -126,13 +133,21 @@
                   <tr>
                       <td style="word-break: break-word; vertical-align: top;">
                         
-                                  <h5 class="card-title">{{ g_info[0] }}</h5>                                   
-                                  <hr style="border: 1px solid #CCC">
+                                  <h5 class="card-title">Bewertung</h5>                                   
+                                  <!-- <hr style="border: 1px solid #CCC"> -->
+                                  <p><img src="{{ url_for('static', filename='images/stars/g_')}}{{g_info[2]}}.png" style="width: 20%;" alt="{{g_info[2]}}"></p>
                                 
-                                  <p  class="card-text">{{g_info[3]}}</p>
-                                 
-                                  <p class="card-text mb-0"><small class="text-muted">{{ g_info[4] }}</small></p>
-                                  <p class="card-text mb-0"><small class="text-muted">{{ g_info[5] }}</small></p>
+                                  <p  class="card-text">{{g_info[1]}}</p>
+                                  <div class="d-flex justify-content-between">
+                                    <p class="card-text mb-0"><small class="text-muted"><i
+                                      class="far fa-thumbs-up mx-2 text-dark"></i>{{g_info[3]}}</small></p>
+                                    <p class="card-text mb-0"><small class="text-muted">{{g_info[0]}}</small></p>
+
+                                  </div>                                 
+                                  
+                                  <p class="card-text mb-0 bg-success px-4"><small class="text-white">Diese Bewertung wurde nach
+                                    TextBlobDE als {{g_info[4]}} wahrgenommen. </small>
+                            </p>
                                  
                         
                       </td>                                      
