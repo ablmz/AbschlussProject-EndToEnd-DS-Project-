@@ -1,25 +1,25 @@
 .kontakt-bg {
-    background-image: linear-gradient(rgba(0,0,0, .8), rgba(0,0,0, .4)), url('../img/himmel.jpg');
-    background-size: cover;
+    /* background-image: linear-gradient(rgba(0,0,0, 0), rgba(0,0,0,0)), url('../img/himmel.jpg'); */
+    /* background-size: cover; */
     background-position: center center;
     
 }
 .dark-bg {
     /* background-image: url('../img/bg-1.jpg'); */
-    background-image: linear-gradient(rgba(0,0,0, .8), rgba(0,0,0, .4)), url('../img/bg-1.jpg');    
+    background-image: linear-gradient(rgba(0,0,0, .5), rgba(0,0,0, .5)), url('../img/bg-0.jpg');    
     background-size: cover;
     background-position: center center;
     
 }
 .dark-bg-footer {
     /* background-image: url('../img/bg-1.jpg'); */
-    background-image: linear-gradient(rgba(0,0,0, .8), rgba(0,0,0, .8)), url('../img/bg-1.jpg');    
+    background-image: linear-gradient(rgba(0,0,0, .5), rgba(0,0,0, .5)), url('../img/bg-1.jpg');    
     background-size: cover;
     background-position: center center;
     
 }
 .ep-height{
-    height: 20vh; 
+    height: 30vh; 
 }
 
 #hero .hp-height {

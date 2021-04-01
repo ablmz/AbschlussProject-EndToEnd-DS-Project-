@@ -5,29 +5,7 @@
       
  <section class="dark-bg" id="hero">
   <div class="container hp-height">
-    <div class="d-flex justify-content-center align-items-center h-100 flex-column">
-
-      <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST"> 
-
-        <select name="klinikNameList" class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
-          {%if klinikName %}
-          <option selected>{{klinikName}}</option>
-          {% elif message %}
-          <option selected>{{message}}</option>
-          {% else %}
-          <option selected>Auswählen Sie ein Klinik</option>
-          {% endif %}                
-          {% for clinic in clinics %}
-            <option value="{{clinic}}">{{clinic}}</option> 
-          {% endfor %}        
-        </select>
-        <br>
-        
-        <!-- <button class="btn btn-primary">Auswählen</button> -->
-
-        <button type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
-      </form>
-    </div>
+    {% include "search.html" %}
   </div>
 </section>
 
@@ -323,4 +301,17 @@
       </div>
     </div>
   </section>
+  {% block script %}
+  <script>
+    
+  $(document).ready(function() {
+
+          $('#example').DataTable().clear();
+         $('#example2').DataTable().clear();
+    } );
+   
+  </script>
+
+  {% endblock %}
+
 {% endblock %}

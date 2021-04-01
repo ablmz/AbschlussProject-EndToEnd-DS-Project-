@@ -1,10 +1,15 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, abort
 import pandas as pd
 from slugify import slugify
 import pickle
+# from flask_wtf.csrf import CSRFProtect
+# import os
 
 app = Flask(__name__)
 
+# SECRET_KEY = os.urandom(32)
+# app.config['SECRET_KEY'] = SECRET_KEY
+# csrf = CSRFProtect(app)
 
 # Bewertungen
 k_reviews = pd.read_csv("clinical_data_lowersaxony_gereinigt.csv")
@@ -39,10 +44,10 @@ def getKlinikInfos(selected):
 @app.route('/')
 def index():
     return render_template("index.html", clinics=clinics)
-    
-
+ 
 @app.route('/ergebnisse', methods=["GET","POST"])
 def ergebnisse():
+    
     if request.method == 'POST':    
 
         selected = str(request.form.get("klinikNameList"))
@@ -54,11 +59,15 @@ def ergebnisse():
         g_Infos=getGoogleInfos(selected)
         return render_template("ergebnisse.html", clinics=clinics, klinikName=selected, k_Infos=k_Infos,g_Infos=g_Infos, slug_name=slug_name)
     else:
-        selected = 'Augenklinik Dr.Hoffmann'
-        slug_name = slugify(selected)
-        k_Infos=getKlinikInfos(selected)
-        g_Infos=getGoogleInfos(selected)
-        return render_template("ergebnisse.html", clinics=clinics, klinikName=selected, k_Infos=k_Infos,g_Infos=g_Infos, slug_name=slug_name)
+        return abort(404, 'Opps! Falsch Vorgang')
+        
+        # return render_template("index.html", message ='Bitte wählen Sie ein Klinik aus',clinics=clinics)
+    #     selected = 'Augenklinik Dr.Hoffmann'
+    #     slug_name = slugify(selected)
+    #     k_Infos=getKlinikInfos(selected)
+    #     g_Infos=getGoogleInfos(selected)
+    #     return render_template("ergebnisse.html", clinics=clinics, klinikName=selected, slug_name=slug_name)
+        
 
 
   

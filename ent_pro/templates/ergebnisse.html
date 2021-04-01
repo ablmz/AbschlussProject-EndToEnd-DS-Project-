@@ -1,39 +1,23 @@
 {% extends 'base.html' %}
 
+{% block title %}
+
+    <title>Blitz - Ergebnisse</title>
+
+{% endblock %}
+
 {% block content %}
-<!-- Search -->
+ <!-- Search -->
       
-<section class="dark-bg" id="hero">
+ <section class="dark-bg" id="hero">
   <div class="container ep-height">
-    <div class="d-flex justify-content-center align-items-center h-100 flex-column">
-
-      <form id="search" action="/ergebnisse" class="col-6" style="text-align:center;" method="POST"> 
-
-        <select name="klinikNameList" class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
-          {%if klinikName %}
-          <option selected>{{klinikName}}</option>
-          {% elif message %}
-          <option selected>{{message}}</option>
-          {% else %}
-          <option selected>Auswählen Sie ein Klinik</option>
-          {% endif %}                
-          {% for clinic in clinics %}
-            <option value="{{clinic}}">{{clinic}}</option> 
-          {% endfor %}        
-        </select>
-        <br>
-        
-        <!-- <button class="btn btn-primary">Auswählen</button> -->
-
-        <button type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
-      </form>
-    </div>
+   
   </div>
 </section>
  <!-- Ergebnisse -->
  <div class="class container">
-    
-<ul class="nav nav-tabs mt-2" id="myTab" role="tablist">
+    <!-- Tab header -->
+  <ul class="nav nav-tabs mt-2" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="klinik-tap" data-bs-toggle="tab" data-bs-target="#klinik" type="button" role="tab" aria-controls="klinik" aria-selected="true">Klinikbewertugen</button>
     </li>
@@ -43,10 +27,11 @@
    
    
   </ul>
+  <!-- Tab content -->
   <div class="tab-content mt-3" id="myTabContent">
     <div class="tab-pane fade show active" id="klinik" role="tabpanel" aria-labelledby="klinik-tab">
       <h4>{{klinikName}}</h4>  
-        <!-- <div class="row row-cols-1 row-cols-md-2 g-4 mt-2"> -->
+        
           <div class="row bg-white">
                   
             <div class="col-6 py-4 px-3">
@@ -79,8 +64,7 @@
                                    
                                     <p class="card-text mb-0"><small class="text-muted">{{ k_info[4] }}</small></p>
                                     <!-- <p class="card-text mb-0"><small class="text-muted">{{ k_info[5] }}</small></p> -->
-                                    <p class="card-text mb-0 px-4"><small><em>Diese Bewertung wurde nach
-                                      TextBlobDE als {{k_info[5]}} wahrgenommen. </em></small>
+                                    <p class="card-text mb-0 px-4"><em><small class="text-danger">Diese Bewertung wurde nach TextBlobDE als {{k_info[5]}} wahrgenommen. </small></em>
                               </p>
                                    
                           
@@ -113,71 +97,70 @@
     </div>
     <div class="tab-pane fade" id="google" role="tabpanel" aria-labelledby="google-tab">
       <h4>{{klinikName}}</h4> 
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
-                          
-          <div class="col">
-            <div class="card">                
-              <img src="{{ url_for('static', filename='images/kliniks/k_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
-              <div class="card-body">
-              <h3 class="card-title">Google Map</h3>
-              <br> 
-            <!-- DataTable begin -->
-            <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-              <thead>
-                  <tr>
-                      <th>Kommanter</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for g_info in g_Infos %}
-                  <tr>
-                      <td style="word-break: break-word; vertical-align: top;">
-                        
-                                  <h5 class="card-title">Bewertung</h5>                                   
-                                  <!-- <hr style="border: 1px solid #CCC"> -->
-                                  <p><img src="{{ url_for('static', filename='images/stars/g_')}}{{g_info[2]}}.png" style="width: 20%;" alt="{{g_info[2]}}"></p>
-                                
-                                  <p  class="card-text">{{g_info[1]}}</p>
-                                  <div class="d-flex justify-content-between">
-                                    <p class="card-text mb-0"><small class="text-muted"><i
-                                      class="far fa-thumbs-up mx-2 text-dark"></i>{{g_info[3]}}</small></p>
-                                    <p class="card-text mb-0"><small class="text-muted">{{g_info[0]}}</small></p>
-
-                                  </div>                                 
-                                  
-                                  <p class="card-text mb-0 bg-success px-4"><small class="text-white">Diese Bewertung wurde nach
-                                    TextBlobDE als {{g_info[4]}} wahrgenommen. </small>
-                            </p>
-                                 
-                        
-                      </td>                                      
-                  </tr>
-                  {% endfor %}
-              </tbody>
-          </table>          
-
-            <!-- DataTable end -->
-
-
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <!-- <img src="..." class="card-img-top" alt="..."> -->
-              <div class="card-body">
-                <h5 class="card-title">Piechchart</h5>
-                <img src="{{ url_for('static', filename='images/piechart/g_p_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
+       
+      <div class="row bg-white">
                   
-                  <h5 class="card-title">Cloudword</h5>
-                  <img src="{{ url_for('static', filename='images/wordcloud/g_w_'+ slug_name +'.png') }}" class="card-img-top" alt="{{klinikName}}">
-              </div>
+        <div class="col-6 py-4 px-3">
+          <div class="container py-3 bdr my-3">
+            <img src="{{ url_for('static', filename='images/kliniks/k_'+ slug_name +'.png') }}" class="col-12" alt="{{klinikName}}">
+          </div> 
+
+          <div class="card mb-6 col-12 border-0 bdr"> 
+                    
+           
+            <div class="card-body">
+            
+            <br> 
+          <!-- DataTable Google begin -->
+          <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th><h6 class="card-title">Google Map</h6></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for g_info in g_Infos %}
+                <tr>
+                    <td style="word-break: break-word; vertical-align: top;">
+                      
+                      <h5 class="card-title">Bewertung</h5>                                   
+                      <p><img src="{{ url_for('static', filename='images/stars/g_')}}{{g_info[2]}}.png" style="width: 20%;" alt="{{g_info[2]}}"></p>
+                      <p  class="card-text">{{g_info[1]}}</p>
+                      <div class="d-flex justify-content-between">
+                        <p class="card-text mb-0"><small class="text-muted">
+                          <i class="far fa-thumbs-up mx-2 text-dark"></i>{{g_info[3]}}</small></p>
+                         <p class="card-text mb-0"><small class="text-muted">{{g_info[0]}}</small></p>
+                      </div>                                 
+                      <p class="card-text mb-0  px-4">
+                        <em><small class="text-danger">Diese Bewertung wurde nach TextBlobDE als {{g_info[4]}} wahrgenommen.</small></em>
+                      </p>         
+                      
+                    </td>                                      
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+          <!-- DataTable end -->
+
+
             </div>
           </div>
-        
-          
         </div>
-
+        <div class="col-6 py-4 px-3 ">
+          <div class="container py-5 bdr my-3">
+            <!-- <img src="..." class="card-img-top" alt="..."> -->
+            
+              <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Das Prozent der Google Map Seite Kommentare</h2>
+              <img src="{{ url_for('static', filename='images/piechart/g_p_'+ slug_name +'.png') }}" class="col-12" alt="{{klinikName}}">
+          </div>
+          <div class="container py-4 bdr my-3">
+          <h2 class="fs-4 text-danger text-uppercase text-center mb-4">Word Cloud für die Google Map Seite Kommentare</h2>
+              <img src="{{ url_for('static', filename='images/wordcloud/g_w_'+ slug_name +'.png') }}" class="col-12" alt="{{klinikName}}">
+          </div> 
+        </div> 
+    </div>
     </div>
    
   </div>
@@ -186,4 +169,8 @@
   
 
 </div>
+
+
 {% endblock %}
+
+
