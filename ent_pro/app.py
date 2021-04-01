@@ -78,6 +78,7 @@ def vorhersage():
     if request.method == 'POST':
         text = request.form.get("comment")
         output = loaded_model.predict(loaded_vectorizer.transform([text]))
+        output = int(output[0])
         return render_template('vorhersage.html',pred=output)
        
     else:
