@@ -3,19 +3,20 @@ from slugify import slugify
 import pickle
 
 
-# loaded_vectorizer= pickle.load(open('vectorizer.pickle','rb'))
-# loaded_model= pickle.load(open('classification.model','rb'))
+loaded_vectorizer= pickle.load(open('vectorizer.pickle','rb'))
+loaded_model= pickle.load(open('classification.model','rb'))
 
 
-# text = "Einer der schlechtesten und inkompetentesten Menschen die ich in einem Krankenhaus gesehen und erlebt habe! Man wird behandelt wie der letzte dreck und noch dazu sind die Mitarbeiter mehr als Inkompetent und haben noch nie etwas von Freundlichkeit gehört!!! Trotz der schwierigen Zeit kann es nicht angehen so behandelt zu werden und mit Menschen zu umzugehen! Der Oberarzt in der Anästhesie müsste fristlos gekündigt werden das letzte was ihm am Herzen liegt ist es Menschen zu helfen! Er ist zu überfordert in seiner Position!"
+text = "Einer der schlechtesten und inkompetentesten Menschen die ich in einem Krankenhaus gesehen und erlebt habe! Man wird behandelt wie der letzte dreck und noch dazu sind die Mitarbeiter mehr als Inkompetent und haben noch nie etwas von Freundlichkeit gehört!!! Trotz der schwierigen Zeit kann es nicht angehen so behandelt zu werden und mit Menschen zu umzugehen! Der Oberarzt in der Anästhesie müsste fristlos gekündigt werden das letzte was ihm am Herzen liegt ist es Menschen zu helfen! Er ist zu überfordert in seiner Position!"
 
-# output = loaded_model.predict(loaded_vectorizer.transform([text]))
-# # print(loaded_model.predict(loaded_vectorizer.transform([text])))
+output = loaded_model.predict(loaded_vectorizer.transform([text]))
+# print(loaded_model.predict(loaded_vectorizer.transform([text])))
 
-# print(output)
+print(type(output))
+print(int(output[0]))
 
-k_reviews = pd.read_csv("clinical_data_lowersaxony_gereinigt.csv")
-g_reviews = pd.read_csv("clinical_data_lowersaxony_google_gereinigt.csv")
+# k_reviews = pd.read_csv("clinical_data_lowersaxony_gereinigt.csv")
+# g_reviews = pd.read_csv("clinical_data_lowersaxony_google_gereinigt.csv")
 
-result = k_reviews.head()
-print(result)
+# result = k_reviews.head()
+#print(result)

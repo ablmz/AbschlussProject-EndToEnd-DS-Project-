@@ -19,9 +19,18 @@
 </section>
 
 <div class="class container">
+  <br>
+  <h3>Textuelle und Sterne Vorhersage mithilfe Machinelles Lernen Modelle</h3>
+  <br>
+  <p>
+    
+Maschinelles Lernen ist ein Oberbegriff für die „künstliche“ Generierung von Wissen aus Erfahrung: Ein künstliches System lernt aus Beispielen und kann diese nach Beendigung der Lernphase verallgemeinern. Dazu bauen Algorithmen beim maschinellen Lernen ein statistisches Modell auf, das auf Trainingsdaten beruht. Das heißt, es werden nicht einfach die Beispiele auswendig gelernt, sondern Muster und Gesetzmäßigkeiten in den Lerndaten erkannt. So kann das System auch unbekannte Daten beurteilen (Lerntransfer). <br><br>
+
+In dieser Webseite können Sie Zwei verschiedene ML Modelergebnisse, und zwar Sternevorhersage, Erfahrungsvorhersage erleben. Bei der der Sternevorhersage kann unser erstes Model die eingegebene Texte als Sterne bewerten. Bei der Erfahrungsvorhersage kann unser zweites Model die eingegebene Texte als gut oder schlecht bewerten.
+  </p>
     <form class="row mx-auto" method="POST" id="vorhersage">
                                                                         
-        <h2 class="fs-4 text-danger my-2 text-center">Bitte geben Sie einen Text ein...</h2>
+        <h4 class="fs-4 text-danger my-2 text-center">Bitte geben Sie einen Text ein...</h4>
 
         <div class="col-12 py-5">
           <div class="input-group">
@@ -40,9 +49,38 @@
       </form>
         <br><br>
       
-      <br><br>
-      <p><img src="{{ url_for('static', filename='images/stars/g_')}}{{pred}}.png" style="width: 50%;" alt="{{pred}}"></p>
     
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+          <h5 class="card-title">Stern Vorhersage</h5>
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/stars/g_')}}{{pred_stern}}.png" style="width: 50%;" alt="{{pred_stern}}">
+            <div class="card-body">
+              
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h5 class="card-title">Text Vorhersage</h5>
+          <div class="card">
+            
+            {% if pred_text == 'Gute Erfahrung' %}
+            <img src="{{ url_for('static', filename='img/gut.jpg')}}" style="width: 50%;" alt="{{pred_text}}">
+
+            {% else %}
+            <img src="{{ url_for('static', filename='img/bad.jpg')}}" style="width: 50%;" alt="{{pred_text}}">
+
+            {% endif %}
+            
+            <div class="card-body">
+              
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+       
+      </div>
 
 </div>
 {% endblock %}

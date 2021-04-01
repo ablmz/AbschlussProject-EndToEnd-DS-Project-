@@ -19,11 +19,26 @@
   </section>
   
   <div class="class container">
-<img src="{{ url_for('static', filename='images/sentiment/A_g_senti_Graph.png') }}" class="card-img-top" >
+  <br>
+    <h3>Sentimentanalyse/Opinion Mining</h3>
+    <br>
+    <p>
+      Sentimentanalyse, auch Opinion Mining genannt, ist das herausfinden der Meinung, die in einem Text zu irgendetwas geäußert wird.<br>
+     Es werden zwei Dimensionen, entlang denen Text klassifiziert werden können, unterschieden: <br>
+     <ul>
+       <li>Objektiv vs. Subjektiv</li>
+       <li>Negativ - Neutral - Positiv</li>
+     </ul>
+          
+     Die einfache Hypothese ist, dass es Wörter gibt, die eine stark positives oder negatives Sentiment verkörpern, und das es reicht diese Wörter zu finden, um einen Text zu klassifizieren. Diese Annahme ist natürlich nicht ganz korrekt. Eine positive oder negative Meinung hängt natürlich von mehr als nur von einzelnen Wörtern ab: insbesondere Negation kann die Bedeutung eines Wortes grundlegend ändern.
+     Krankenhäuserndaten wurden mit TextBlobDE verarbeitet. TextBlob ist die Basis für natural language processing (NLP) mit Python. Damit sind viele Ansätze wie etwa Erkennen von Wortarten, Extraktion von Substantiven, Stimmungsanalyse und auch Klassifizierungen möglich. Es gibt auch Methoden wie NLTK und Spacy.
+    </p>
+    <br>
+<img src="{{ url_for('static', filename='images/sentiment/A_g_senti_Graph.png') }}" style="width: 80%;" class="card-img-top" >
 <br><br>
-<img src="{{ url_for('static', filename='images/sentiment/A_k_senti_Graph.png') }}" class="card-img-top" >
+<img src="{{ url_for('static', filename='images/sentiment/A_k_senti_Graph.png') }}" style="width: 80%;" class="card-img-top" >
 <br><br>
-<img src="{{ url_for('static', filename='images/sentiment/A_kg_senti_Graph.png') }}" class="card-img-top" >
+<img src="{{ url_for('static', filename='images/sentiment/A_kg_senti_Graph.png') }}" style="width: 80%;" class="card-img-top" >
 
 </div>
 {% endblock %}
