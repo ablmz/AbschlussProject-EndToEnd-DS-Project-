@@ -43,7 +43,7 @@ In dieser Webseite können Sie Zwei verschiedene ML Modelergebnisse, und zwar St
 
         <div class="d-grid">
           <button class="btn btn-outline-danger rounded-0 text-uppercase" type="submit">
-            SEND MESSAGE
+            VORHERSAGE
           </button>
         </div>
       </form>
@@ -66,14 +66,14 @@ In dieser Webseite können Sie Zwei verschiedene ML Modelergebnisse, und zwar St
           <div class="card">
             
             {% if pred_text == 'Gute Erfahrung' %}
-            <img src="{{ url_for('static', filename='img/gut.jpg')}}" style="width: 50%;" alt="{{pred_text}}">
+              <img src="{{ url_for('static', filename='img/gut.jpg')}}" style="width: 50%;" alt="{{pred_text}}">
 
             {% else %}
-            <img src="{{ url_for('static', filename='img/bad.jpg')}}" style="width: 50%;" alt="{{pred_text}}">
+              <img src="{{ url_for('static', filename='img/bad.jpg')}}" style="width: 50%; alt="{{pred_text}}">
 
             {% endif %}
             
-            <div class="card-body">
+              <div class="card-body">
               
               <p class="card-text"></p>
             </div>

@@ -68,14 +68,7 @@ def ergebnisse():
         return render_template("ergebnisse.html", clinics=clinics, klinikName=selected, k_Infos=k_Infos,g_Infos=g_Infos, slug_name=klinikName)
     else:
         return abort(404, 'Opps! Falsch Vorgang')
-        
-        # return render_template("index.html", message ='Bitte wählen Sie ein Klinik aus',clinics=clinics)
-    #     selected = 'Augenklinik Dr.Hoffmann'
-    #     slug_name = slugify(selected)
-    #     k_Infos=getKlinikInfos(selected)
-    #     g_Infos=getGoogleInfos(selected)
-    #     return render_template("ergebnisse.html", clinics=clinics, klinikName=selected, slug_name=slug_name)
-        
+   
 def sternVorherSage(text):
     #Ster Vorhersage Model
     loaded_vectorizer= pickle.load(open('vectorizer.pickle','rb'))
