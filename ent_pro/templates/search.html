@@ -7,6 +7,8 @@
        
         {% if message %}
         <option selected>{{message}}</option>
+        {% elif klinikName %}
+        <option selected>{{klinikName}}</option>
         {% else %}
         <option selected>Auswählen Sie ein Klinik</option>
         {% endif %}                
@@ -18,6 +20,7 @@
       
       <!-- <button class="btn btn-primary">Auswählen</button> -->
 
-      <button type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
+      <button id="submit" type="submit" class="btn btn-outline-danger col-4">Auswählen</button>
     </form>
   </div>
+ 

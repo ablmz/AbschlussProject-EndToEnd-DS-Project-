@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -37,7 +38,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/">Home</a>
+                  <a class="nav-link active" id="home" aria-current="page" href="/">Home</a>
                 </li>
                 <!-- <li class="nav-item">
                   <a class="nav-link" href="/ergebnisse">Kliniken</a>
@@ -93,39 +94,24 @@
     <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-    {% block script %}
     
-
-    {% endblock %}
-    <script>
-     
-      if ( window.history.replaceState ) {
-          window.history.replaceState( null, null, window.location.href );
-      }
-  </script>
-    <script>
-      $(document).ready(function() {
-
-        $('#example').DataTable({
-          "lengthMenu": [ 3, 5, 10, 20, 50 ],
-          'charset': 'UTF-8'
-        } );
+   
+<script>
   
-        
-        $('#example2').DataTable({
-          "lengthMenu": [ 3, 5, 10, 20, 50 ],
-           'charset': 'UTF-8'
-        } );
+  $(document).ready(function() {
+    $('#example').DataTable({
+      "lengthMenu": [ 3, 5, 10, 20, 50 ],
+      'charset': 'UTF-8'
+    } );
 
-        
-        } );
-    </script>
+    $('#example2').DataTable({
+      "lengthMenu": [ 3, 5, 10, 20, 50 ],
+       'charset': 'UTF-8'
+    } );
 
-   
 
-   
-
-   
-    
+  } );
+</script>
+  
 </body>
 </html>

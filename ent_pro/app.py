@@ -19,11 +19,12 @@ g_reviews = pd.read_csv("clinical_data_lowersaxony_google_gereinigt.csv")
 
 clinics = g_reviews["Name der Klinik"].unique()
 
-k_klinikInfos=[]
-g_klinikInfos=[]
 
 
-def getGoogleInfos(selected): 
+
+
+def getGoogleInfos(selected):
+    g_klinikInfos=[] 
     g_klinik = g_reviews.loc[g_reviews['Name der Klinik'] == selected]
     g = g_klinik[["Datum der Bewertung","Textuelle Bewertung","Sternebewertung","Likes","sentimentBewertung","Klinik Name"]]
     #g_klinikName = g[5]  
@@ -32,7 +33,8 @@ def getGoogleInfos(selected):
         g_klinikInfos.append(info)
     return g_klinikInfos
 
-def getKlinikInfos(selected): 
+def getKlinikInfos(selected):
+    k_klinikInfos=[] 
     k_klinik = k_reviews.loc[k_reviews['Name der Klinik'] == selected]
     k = k_klinik[["Titel","Fachbereich","Datum","Erfahrungsbericht","Gesamtzufriedenheit","sentimentBewertung","Klinik Name"]]
     #k_klinikName = k[6]
@@ -48,11 +50,12 @@ def index():
     return render_template("index.html", clinics=clinics)
  
 
-@app.route('/ergebnisse', methods=["GET","POST"])
+@app.route('/ergebnisse', methods=["POST"])
 def ergebnisse():
-    
-    if request.method == 'POST':    
 
+    
+    if request.method == 'POST':        
+       
         selected = str(request.form.get("klinikNameList"))
         if selected not in clinics:
             return render_template("index.html", message ='Bitte wählen Sie ein Klinik aus',clinics=clinics)
@@ -61,6 +64,8 @@ def ergebnisse():
         k_Infos=getKlinikInfos(selected)
         g_Infos=getGoogleInfos(selected)
         klinikName = ''
+
+        
 
         for k in k_Infos:
             klinikName = k[6]
@@ -108,6 +113,9 @@ def vorhersage():
     else:
         return render_template('vorhersage.html')
 
+@app.route('/admin')
+def admin():
+    return redirect('http://www.pythonanywhere.com/login/?next=')
 
 @app.route('/sentiment')
 def sentiment():

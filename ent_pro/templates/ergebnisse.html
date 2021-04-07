@@ -11,7 +11,7 @@
       
  <section class="dark-bg" id="hero">
   <div class="container ep-height">
-   
+    {% include "search.html" %}
   </div>
 </section>
  <!-- Ergebnisse -->
@@ -52,9 +52,9 @@
                         <th><h6 class="card-title">Kilinikbewertungen.de</h6></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbody">
                     {% for k_info in k_Infos %}
-                    <tr>
+                    <tr >
                         <td style="word-break: break-word; vertical-align: top;">
                           
                                     <h5 class="card-title">{{ k_info[0] }}</h5>                                   
@@ -170,7 +170,6 @@
   
 
 </div>
-
 
 {% endblock %}
 
