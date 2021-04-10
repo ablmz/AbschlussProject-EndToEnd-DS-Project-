@@ -61,5 +61,5 @@ You can visit http://blitzteam.pythonanywhere.com/ to see our Model and Analyse 
 #### Contributors:
 - Meryem, Ismail, Asim Irshad, Adem
 
-##### Autor:
-- Adem Bilmez, 11.04.2021
+#### Autor:
+- Adem Bilmez
