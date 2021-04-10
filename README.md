@@ -15,7 +15,7 @@ The Clinic Datas of 22 Hospitals in Lower Saxony Germany from klinikbewertung.de
 Note: There are ratings for clinic ratings that are not included in the overall ratings (marked on the website and within the HTML document).
 Goal: Two files with the respective ratings from Google Maps & clinic ratings for further processing
 
-Dependencies:
+#### Dependencies:
 - Python 3
 - Scrapy
 - Selenium
@@ -32,8 +32,7 @@ First of them predicts a review text as good or bad experience
 #### Model 2:
 Second one predicts the star reviews.
 
-Dependencies:
-- Python 3
+#### Dependencies:
 - Pandas
 - Numpy
 - Matplotlib
@@ -48,7 +47,7 @@ Dependencies:
 Creating website / web app(with e.g. filter options) to display related data, data analysis and results of machine learning models
 We show all Analysis Results and Machine Learning Model Results in a webpage. We used Flask to deploy our ML Models and we prefered http://blitzteam.pythonanywhere.com/
 
-Dependencies
+#### Dependencies
 - HTML
 - CSS
 - JS
